@@ -81,7 +81,4 @@ public class Board
 //        boardArray[7][4] =
 
     }
-
-
-
 }
