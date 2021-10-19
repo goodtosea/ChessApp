@@ -1,13 +1,19 @@
 package game;
 import pieces.*;
 
+import pieces.Piece;
+
+/**
+ * A 2D array of pieces.
+ */
 public class Board
 {
     private Piece boardArray[][];
-
-    public Board()
-    {
-        boardArray = new Piece[8][8];
+    /**
+     * Constructs an empty 8x8 board.
+     */
+	  public Board() {
+      boardArray = new Piece[8][8];
 
         /**
          * White Pawns
@@ -79,6 +85,23 @@ public class Board
          * Black Queen
          */
 //        boardArray[7][4] =
+
+    }
+
+    /**
+     * Sets the value of a cell in the board to a specified piece.
+     * @param piece - the piece to set the cell's value to
+     * @param x - the column of the cell
+     * @param y - the row of the cell
+     */
+    void setPosition(Piece piece, int x, int y) {
+
+    }
+
+    /**
+     * Fills the board with pieces in the standard chess layout.
+     */
+    void fillboard() {
 
     }
 }
