@@ -1,4 +1,6 @@
 package tests;
+import game.Board;
+import pieces.Piece;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,11 +8,15 @@ import org.junit.jupiter.api.Test;
 
 class BoardTests
 {
-
+	/**
+	 * Checks if the board is correctly initialized empty
+	 */
 	@Test
-	void test()
+	void boardCtorTest()
 	{
-		fail("Not yet implemented");
+		Board b = new Board();
+		for (Piece[] col : b.getBoardArray())
+			for (Piece p : col)
+				assertNull(p);
 	}
-
 }
