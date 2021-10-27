@@ -32,7 +32,7 @@ public class Board
     /**
      * Fills the board with pieces in the standard chess layout.
      */
-    public void fillboard()
+    public void fillBoard()
     {
         int firstPieceCol = (boardArray.length - 8) / 2;
         int topRow = boardArray[0].length - 1;
