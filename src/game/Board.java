@@ -14,78 +14,6 @@ public class Board
 	public Board() 
 	{
 		boardArray = new Piece[8][8];
-
-        /**
-         * White Pawns
-         */
-//        for(int j = 0; j < 8; j++)
-//            boardArray[1][j] =
-
-        /**
-         * Black Pawns
-         */
-//        for(int j = 0; j < 8; j++)
-//            boardArray[6][j] =
-
-        /**
-         * White Rooks
-         */
-//        for(int j = 0; j < 8; j = j + 7)
-//            boardArray[0][j] =
-
-
-        /**
-         * Black Rooks
-         */
-//        for(int j = 0; j < 8; j = j + 7)
-//            boardArray[7][j] =
-
-
-        /**
-         * White Knights
-         */
-//        for(int j = 1; j < 8; j = j + 5)
-//            boardArray[0][j] =
-
-
-        /**
-         * Black Knights
-         */
-//        for(int j = 1; j < 8; j = j + 5)
-//            boardArray[7][j] =
-
-        /**
-         * White Bishops
-         */
-//        for(int j = 2; j < 6; j = j + 3)
-//            boardArray[0][j] =
-
-        /**
-         * Black Bishops
-         */
-//        for(int j = 2; j < 6; j = j + 3)
-//            boardArray[7][j] =
-
-        /**
-         * White King
-         */
-//        boardArray[0][3] =
-
-        /**
-         * Black King
-         */
-//        boardArray[7][3] =
-
-        /**
-         * White Queen
-         */
-//        boardArray[0][4] =
-
-        /**
-         * Black Queen
-         */
-//        boardArray[7][4] =
-
     }
 
 	
@@ -97,15 +25,63 @@ public class Board
      */
     public void setPosition(Piece piece, int x, int y) 
     {
-
+        boardArray[x][y] = piece;
     }
 
     
     /**
      * Fills the board with pieces in the standard chess layout.
      */
-    public void fillboard() 
+    public void fillboard()
     {
+        int firstPieceCol = (boardArray.length - 8) / 2;
+        int topRow = boardArray[0].length - 1;
+
+        // white pawns
+        for (int j = firstPieceCol; j < firstPieceCol + 8; j++) {
+            setPosition(new Pawn(j, 1), j, 1);
+        }
+
+        // black pawns
+        for (int j = firstPieceCol; j < firstPieceCol + 8; j++) {
+            setPosition(new Pawn(j, topRow - 1), j, topRow - 1);
+        }
+
+        // white rooks
+        setPosition(new Rook(firstPieceCol, 0), firstPieceCol, 0);
+        setPosition(new Rook(firstPieceCol + 7, 0), firstPieceCol + 7, 0);
+
+        // black rooks
+        setPosition(new Rook(firstPieceCol, topRow), firstPieceCol, topRow);
+        setPosition(new Rook(firstPieceCol + 7, topRow) firstPieceCol + 7, topRow);
+
+        // white knights
+        setPosition(new Knight(firstPieceCol + 1, 0), firstPieceCol + 1, 0);
+        setPosition(new Knight(firstPieceCol + 6, 0), firstPieceCol + 6, 0);
+
+        // black knights
+        setPosition(new Knight(firstPieceCol + 1, topRow), firstPieceCol + 1, topRow);
+        setPosition(new Knight(firstPieceCol + 6, topRow), firstPieceCol + 6, topRow);
+
+        // white bishops
+        setPosition(new Bishop(firstPieceCol + 2, 0), firstPieceCol + 2, 0);
+        setPosition(new Bishop(firstPieceCol + 5, 0), firstPieceCol + 5, 0);
+
+        // black bishops
+        setPosition(new Bishop(firstPieceCol + 2, topRow), firstPieceCol + 2, topRow);
+        setPosition(new Bishop(firstPieceCol + 5, topRow), firstPieceCol + 5, topRow);
+
+        // white queen
+        setPosition(new Queen(firstPieceCol + 3, 0), firstPieceCol + 3, 0);
+
+        // black queen
+        setPosition(new Queen(firstPieceCol + 3, topRow), firstPieceCol + 3, topRow);
+
+        // white king
+        setPosition(new Queen(firstPieceCol + 4, 0), firstPieceCol + 4, 0);
+
+        // black king
+        setPosition(new Queen(firstPieceCol + 4, topRow), firstPieceCol + 4, topRow);
 
     }
     
@@ -116,6 +92,6 @@ public class Board
      */
     public Piece[][] getBoardArray()
     {
-    	return boardArray;
+    	return boardArray.clone();
     }
 }
