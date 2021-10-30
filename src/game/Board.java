@@ -6,7 +6,7 @@ import pieces.*;
  */
 public class Board
 {
-    private Piece boardArray[][];
+    private static Piece boardArray[][];
     
     /**
      * Constructs an empty 8x8 board.
@@ -53,7 +53,7 @@ public class Board
 
         // black rooks
         setPosition(new Rook(firstPieceCol, topRow), firstPieceCol, topRow);
-        setPosition(new Rook(firstPieceCol + 7, topRow) firstPieceCol + 7, topRow);
+        setPosition(new Rook(firstPieceCol + 7, topRow), firstPieceCol + 7, topRow);
 
         // white knights
         setPosition(new Knight(firstPieceCol + 1, 0), firstPieceCol + 1, 0);
@@ -90,7 +90,7 @@ public class Board
      * Getter method for the board 2D array
      * @return the 2D array with the board state
      */
-    public Piece[][] getBoardArray()
+    public static Piece[][] getBoardArray()
     {
     	return boardArray.clone();
     }
