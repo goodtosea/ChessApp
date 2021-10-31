@@ -23,7 +23,7 @@ public class Board
      * @param x - the column of the cell
      * @param y - the row of the cell
      */
-    public void setPosition(Piece piece, int x, int y) 
+    protected static void setPosition(Piece piece, int x, int y)
     {
         boardArray[x][y] = piece;
     }
@@ -32,7 +32,7 @@ public class Board
     /**
      * Fills the board with pieces in the standard chess layout.
      */
-    public void fillBoard()
+    protected static void fillBoard()
     {
         int firstPieceCol = (boardArray.length - 8) / 2;
         int topRow = boardArray[0].length - 1;
