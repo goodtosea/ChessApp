@@ -1,9 +1,6 @@
 package pieces;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import game.Mover;
 
@@ -70,18 +67,16 @@ public class King extends Piece
             return false;
         }
 
-        Map<Piece, ArrayList<Integer>> possibleMoves = everyPieceValidMoves();
+        Map<Piece, List<List<Integer>>> possibleMoves = everyPieceValidMoves();
 
         Mover mover = new Mover();
         Set<Piece> pieces = possibleMoves.keySet();
 
         // try to find at least one valid move, in which case return false
         for (Piece piece : pieces) {
-            ArrayList<Integer> pieceValidMoves = possibleMoves.get(piece);
-            for (int move = 0; move < pieceValidMoves.size()/2; move++) {
-                int moveX = pieceValidMoves.get(2*move);
-                int moveY = pieceValidMoves.get(2*move+1);
-                if (mover.isValidMove(piece, moveX, moveY) == true) {
+            List<List<Integer>> pieceValidMoves = possibleMoves.get(piece);
+            for (List<Integer> move : pieceValidMoves) {
+                if (mover.isValidMove(piece, move.get(0), move.get(1)) == true) {
                     return false;
                 }
             }
@@ -94,8 +89,8 @@ public class King extends Piece
      * Finds all valid moves of all pieces belonging to a player.
      * @return a map connecting each piece to a list of all its valid moves
      */
-    private Map<Piece, ArrayList<Integer>> everyPieceValidMoves() {
-        Map<Piece, ArrayList<Integer>> possibleMoves = new HashMap<>();
+    private Map<Piece, List<List<Integer>>> everyPieceValidMoves() {
+        Map<Piece, List<List<Integer>>> possibleMoves = new HashMap<>();
 
         // loop through board to find all of player's pieces
         Piece[][] boardArrCopy = Board.getBoardArray();
