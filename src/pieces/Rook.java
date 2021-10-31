@@ -3,7 +3,7 @@ package pieces;
 /**
  * Chess piece that moves and captures horizontally and vertically.
  */
-public class Rook implements Piece
+public class Rook extends Piece
 {
 	private int 	x;
 	private int 	y;
@@ -28,9 +28,13 @@ public class Rook implements Piece
      */
     @Override
     public boolean isValidMove(int x, int y) {
-    	// Movement only on row or column
-    	if (x == this.x || y == this.y)
+    	// Movement only on row or column and doesn't allow for same space movement
+    	if (x == this.x ^ y == this.y)
+    	{
+    		// Array[][] b = Board.getBoardArray();
+    		
     		return true;
+    	}
     	return false;
     }
     
