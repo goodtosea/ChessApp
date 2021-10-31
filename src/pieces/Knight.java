@@ -6,13 +6,18 @@ package pieces;
  */
 public class Knight extends Piece
 {
+    private int x,y;
+    private boolean isWhite;
+
+
     /**
      * Constructs a knight and places it at a specified position on the board.
      * @param x - the column to place the knight
      * @param y - the row to place the knight
+     * @param isWhite - the color of the Knight
      */
-    public Knight (int x, int y) {
-        super(x,y);
+    public Knight (int x, int y, boolean isWhite) {
+        super(x,y,isWhite);
     }
 
     /**
