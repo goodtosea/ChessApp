@@ -37,10 +37,13 @@ abstract class Piece
      * @return true if the move is valid, and false otherwise
      */
     abstract boolean isValidMove(int x, int y);
-    abstract int getX();
-    abstract int getY();
-    public boolean isWhite()
-    {
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
+    public boolean isWhite(){
         return isWhite;
     }
 
@@ -49,7 +52,7 @@ abstract class Piece
      * Finds all the ways the piece can move, not accounting for check or player turn.
      * @return an ArrayList arr such that the valid moves are to the cells x=arr.get(2k), y=arr.get(2k+1) for integers k
      */
-    public List<ArrayList<Integer>> findAllValidMoves()
+    public List<List<Integer>> findAllValidMoves()
     {
         List<ArrayList<Integer>> listRes = new List<ArrayList<Integer>>();
         int i = 0;

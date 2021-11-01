@@ -29,5 +29,11 @@ public class Knight extends Piece
     @Override
     public boolean isValidMove(int x, int y) {
 
+        if((y = this.y + 2 || y = this.y - 2) && (x = this.x + 1 || x = this.x - 1))
+            return true;
+        if((x = this.x + 2 || x = this.x -2) && (y = this.y + 1 || y = this.y - 1))
+            return true;
+        return false;
+
     }
 }

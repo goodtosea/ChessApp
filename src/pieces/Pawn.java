@@ -6,13 +6,15 @@ package pieces;
  */
 public class Pawn extends Piece
 {
+    private int x,y;
+    private boolean isWhite;
     /**
      * Constructs a pawn and places it at a specified position on the board.
      * @param x - the column to place the pawn
      * @param y - the row to place the pawn
      */
-    public Pawn(int x, int y) {
-        super(x,y);
+    public Pawn(int x, int y, boolean isWhite) {
+        super(x,y,isWhite);
     }
 
     /**
@@ -23,6 +25,18 @@ public class Pawn extends Piece
      */
     @Override
     public boolean isValidMove(int x, int y) {
+        if(y < boardArray.lengh)
+        {
+            if((y = this.y + 1 || y = this.y + 2))
+                return true;
+        }
+        else
+        {
+            if(y = this.y + 1)
+                return true;
+        }
+        return false;
+
 
     }
 }
