@@ -1,11 +1,10 @@
 package pieces;
-
-import java.util.ArrayList;
+import game.Board;
 
 /**
  * Chess piece that moves and captures diagonally.
  */
-public class Bishop implements Piece
+public class Bishop extends Piece
 {
 	private int 	x;
 	private int 	y;
@@ -29,10 +28,34 @@ public class Bishop implements Piece
      */
     @Override
     public boolean isValidMove(int x, int y) {
-    	// Change in x == change in y
-    	if (Math.abs(x - this.x) == Math.abs(y - this.y))
-    		return true;
-    	return false;
+    	// Change in x == change in y and not in same position
+    	int pathLength = Math.abs(x - this.x);
+    	if (pathLength != Math.abs(y - this.y) || pathLength == 0) 
+    		return false;
+    	
+    	// Determines the direction for the for loop that checks each space
+    	int stepDirectionX = Integer.signum(x - this.x);
+    	int stepDirectionY = Integer.signum(y - this.y);
+    	
+    	Piece[][] b = Board.getBoardArray();
+    	
+    	// Check that each cell between the start and end point is empty
+    	for (int i = 1; i < pathLength; i++) {
+    		int curr_x = this.x + stepDirectionX * i;
+    		int curr_y = this.y + stepDirectionY * i;
+    		
+    		if (b[curr_x][curr_y] == null)
+    			continue;
+    		else
+    			return false;
+    	}
+    	
+    	// Check that if the end point is full, that it is the opposite color
+    	if (b[x][y] != null)
+    		if (isWhite == b[x][y].isWhite())
+    			return false;
+    	
+    	return true;
     }
     
 }
