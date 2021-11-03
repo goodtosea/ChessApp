@@ -78,10 +78,10 @@ public class Board
         setPosition(new Queen(firstPieceCol + 3, topRow, false), firstPieceCol + 3, topRow);
 
         // white king
-        setPosition(new Queen(firstPieceCol + 4, 0, true), firstPieceCol + 4, 0);
+        setPosition(new King(firstPieceCol + 4, 0, true), firstPieceCol + 4, 0);
 
         // black king
-        setPosition(new Queen(firstPieceCol + 4, topRow, false), firstPieceCol + 4, topRow);
+        setPosition(new King(firstPieceCol + 4, topRow, false), firstPieceCol + 4, topRow);
 
     }
     
