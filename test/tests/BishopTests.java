@@ -14,10 +14,11 @@ class BishopTests
 	void bishopValidMoveTest()
 	{
 		Bishop b = new Bishop(2, 2, true);
-		Board.setPosition(b, 2, 2);
-		b.isValidMove(2, 2);
+		Board board = new Board();
+		
+//		b.isValidMove(2, 2);
 		assertEquals(b.isValidMove(2, 2), false);	// Same position
-		b.isValidMove(3, 3);
+//		b.isValidMove(3, 3);
 		assertEquals(b.isValidMove(3, 3), true);	// Up-right 1
 		assertEquals(b.isValidMove(2, 3), false);	// Up 1 (invalid)
 		assertEquals(b.isValidMove(5, 5), true);	// Up-right 2
