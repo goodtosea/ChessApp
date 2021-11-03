@@ -3,11 +3,8 @@ package pieces;
 /**
  * Chess piece that moves and captures diagonally, vertically, and horizontally.
  */
-public class Queen implements Piece
+public class Queen extends Piece
 {
-	private int 	x;
-	private int 	y;
-	private boolean isWhite;
 	
     /**
      * Constructs a queen and places it at a specified position on the board.
@@ -31,4 +28,5 @@ public class Queen implements Piece
     		return true;
     	return false;
     }
+    
 }
