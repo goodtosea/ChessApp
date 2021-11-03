@@ -4,11 +4,7 @@ import game.Board;
 /**
  * Chess piece that moves and captures diagonally.
  */
-public class Bishop extends Piece
-{
-	private int 	x;
-	private int 	y;
-	private boolean isWhite;
+public class Bishop extends Piece {
 	
     /**
      * Constructs a bishop and places it at a specified position on the board.
@@ -51,6 +47,7 @@ public class Bishop extends Piece
     	}
     	
     	// Check that if the end point is full, that it is the opposite color
+    	// Board needs to be filled for the access to work
     	if (b[x][y] != null)
     		if (isWhite == b[x][y].isWhite())
     			return false;
