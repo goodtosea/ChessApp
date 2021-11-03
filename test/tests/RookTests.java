@@ -14,7 +14,7 @@ class RookTests
 	{
 		Rook r = new Rook(0, 8, true);
 		assertEquals(r.isValidMove(4, 7), false);	// Up-right 1
-		assertEquals(r.isValidMove(4, 8), true);	// Up 1 (invalid)
+		assertEquals(r.isValidMove(4, 8), true);	// Up 1
 		assertEquals(r.isValidMove(5, 6), false);	// Up-right 2
 		assertEquals(r.isValidMove(2, 7), false);	// Up-left 1
 	}
