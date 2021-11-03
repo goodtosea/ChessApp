@@ -7,9 +7,16 @@ import pieces.*;
  */
 public class Mover
 {
-    boolean isWhiteTurn;
-    King whiteKing;
-    King blackKing;
+    private static boolean isWhiteTurn;
+    private static King whiteKing;
+    private static King blackKing;
+
+    /**
+     * Constructs a mover.
+     */
+    public Mover() {
+
+    }
 
     /**
      * Constructs a mover.
