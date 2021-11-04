@@ -6,9 +6,8 @@ package pieces;
  */
 public class Knight extends Piece
 {
-    private int x,y;
-    private boolean isWhite;
 
+    Piece[][] p = Board.getBoardArray();
 
     /**
      * Constructs a knight and places it at a specified position on the board.
@@ -19,7 +18,6 @@ public class Knight extends Piece
     public Knight (int x, int y, boolean isWhite) {
         super(x,y,isWhite);
     }
-
     /**
      * Checks if the piece can move in the specified way, not accounting for check or player turn.
      * @param x - the column to move to
@@ -28,11 +26,13 @@ public class Knight extends Piece
      */
     @Override
     public boolean isValidMove(int x, int y) {
-
-        if((y = this.y + 2 || y = this.y - 2) && (x = this.x + 1 || x = this.x - 1))
-            return true;
-        if((x = this.x + 2 || x = this.x -2) && (y = this.y + 1 || y = this.y - 1))
-            return true;
+        if(isWhite != p[x][y].isWhite() || p[x][y] == null)
+        {
+            if((y = this.y + 2 || y = this.y - 2) && (x = this.x + 1 || x = this.x - 1))
+                return true;
+            if((x = this.x + 2 || x = this.x -2) && (y = this.y + 1 || y = this.y - 1))
+                return true;
+        }
         return false;
 
     }

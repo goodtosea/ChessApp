@@ -6,8 +6,9 @@ package pieces;
  */
 public class Pawn extends Piece
 {
-    private int x,y;
-    private boolean isWhite;
+
+    private boolean hasMoved;
+    Piece[][] p = Board.getBoardArray();
     /**
      * Constructs a pawn and places it at a specified position on the board.
      * @param x - the column to place the pawn
@@ -15,7 +16,9 @@ public class Pawn extends Piece
      */
     public Pawn(int x, int y, boolean isWhite) {
         super(x,y,isWhite);
+        hasMoved = false;
     }
+
 
     /**
      * Checks if the piece can move in the specified way, not accounting for check or player turn.
@@ -25,14 +28,44 @@ public class Pawn extends Piece
      */
     @Override
     public boolean isValidMove(int x, int y) {
-        if(y < boardArray.lengh)
-        {
-            if((y = this.y + 1 || y = this.y + 2))
+        if((x = this.x + 1 && y = this.y + 1) || (x = this.x - 1 && y = this.y + 1))
+            if(isWhite != p[x][y].isWhite())
                 return true;
+
+
+//        if(this.y < boardArray.lengh/2 - 1)
+//        {
+//
+//            if((y < boardArray.length/2 && y - this.y <= 2 && y - this.y > 0))
+//            {
+//                int i = y;
+//                while(i > this.y)
+//                {
+//                    if(p[x][i] != null)
+//                        return false;
+//                    i--;
+//                }
+//                return true;
+//            }
+//        }
+        if(!hasMoved)
+        {
+            if(x == this.x && y == this.y + 1 && p[x][y] == null)
+            {
+                hasMoved = true;
+                return true;
+            }
+
+            if(x == this.x && y == this.y + 2 && p[x][y-1] == null && p[x][y] == null)
+            {
+                hasMoved = true;
+                return true;
+            }
         }
+            
         else
         {
-            if(y = this.y + 1)
+            if(y = this.y + 1 && x = this.x && p[x][y] == null)
                 return true;
         }
         return false;

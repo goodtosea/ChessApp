@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 abstract class Piece
 {
-    private int x, y;
-    private boolean isWhite;
+    protected int x, y;
+    protected boolean isWhite;
     /**
      * Constructs a piece.
      */
