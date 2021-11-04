@@ -16,9 +16,10 @@ public class King extends Piece
      * Constructs a king and places it at a specified position on the board.
      * @param x - the column to place the king
      * @param y - the row to place the king
+     * @param isWhite - whether the piece is white
      */
-    public King(int x, int y) {
-        super(x,y);
+    public King(int x, int y, boolean isWhite) {
+        super(x, y, isWhite);
         isChecked = false;
     }
 
