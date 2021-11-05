@@ -28,47 +28,64 @@ public class Pawn extends Piece
      */
     @Override
     public boolean isValidMove(int x, int y) {
-        if((x = this.x + 1 && y = this.y + 1) || (x = this.x - 1 && y = this.y + 1))
-            if(isWhite != p[x][y].isWhite())
-                return true;
 
-
-//        if(this.y < boardArray.lengh/2 - 1)
-//        {
-//
-//            if((y < boardArray.length/2 && y - this.y <= 2 && y - this.y > 0))
-//            {
-//                int i = y;
-//                while(i > this.y)
-//                {
-//                    if(p[x][i] != null)
-//                        return false;
-//                    i--;
-//                }
-//                return true;
-//            }
-//        }
-        if(!hasMoved)
+        if(isWhite)
         {
-            if(x == this.x && y == this.y + 1 && p[x][y] == null)
+            if((x == this.x + 1 && y == this.y + 1) || (x == this.x - 1 && y == this.y + 1))
+                if(isWhite != p[x][y].isWhite())
+                    return true;
+
+            if(!hasMoved)
             {
-                hasMoved = true;
-                return true;
+                if(x == this.x && y == this.y + 1 && p[x][y] == null)
+                {
+                    hasMoved = true;
+                    return true;
+                }
+
+                if(x == this.x && y == this.y + 2 && p[x][y-1] == null && p[x][y] == null)
+                {
+                    hasMoved = true;
+                    return true;
+                }
             }
 
-            if(x == this.x && y == this.y + 2 && p[x][y-1] == null && p[x][y] == null)
+            else
             {
-                hasMoved = true;
-                return true;
+                if(y == this.y + 1 && x == this.x && p[x][y] == null)
+                    return true;
             }
+            return false;
         }
-            
         else
         {
-            if(y = this.y + 1 && x = this.x && p[x][y] == null)
-                return true;
+            if((x == this.x + 1 && y == this.y - 1) || (x == this.x - 1 && y == this.y - 1))
+                if(isWhite != p[x][y].isWhite())
+                    return true;
+
+            if(!hasMoved)
+            {
+                if(x == this.x && y == this.y - 1 && p[x][y] == null)
+                {
+                    hasMoved = true;
+                    return true;
+                }
+
+                if(x == this.x && y == this.y - 2 && p[x][y+1] == null && p[x][y] == null)
+                {
+                    hasMoved = true;
+                    return true;
+                }
+            }
+
+            else
+            {
+                if(y == this.y - 1 && x == this.x && p[x][y] == null)
+                    return true;
+            }
+            return false;
         }
-        return false;
+
 
 
     }
