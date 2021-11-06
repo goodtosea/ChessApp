@@ -1,11 +1,14 @@
 package pieces;
 
+import game.Board;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An abstract chess piece.
  */
-abstract class Piece
+public abstract class Piece
 {
     protected int x, y;
     protected boolean isWhite;
@@ -16,7 +19,6 @@ abstract class Piece
         x = 0;
         y = 0;
         isWhite = true;
-
     }
 
     /**
@@ -36,7 +38,7 @@ abstract class Piece
      * @param y - the row to move to
      * @return true if the move is valid, and false otherwise
      */
-    abstract boolean isValidMove(int x, int y);
+    public abstract boolean isValidMove(int x, int y);
     public int getX(){
         return x;
     }
@@ -47,21 +49,20 @@ abstract class Piece
         return isWhite;
     }
 
-    // should probably make a Position class that stores two integers, so that this returns ArrayList<Position>
     /**
      * Finds all the ways the piece can move, not accounting for check or player turn.
      * @return an ArrayList arr such that the valid moves are to the cells x=arr.get(2k), y=arr.get(2k+1) for integers k
      */
     public List<List<Integer>> findAllValidMoves()
     {
-        List<ArrayList<Integer>> listRes = new List<ArrayList<Integer>>();
+        List<List<Integer>> listRes = new ArrayList<List<Integer>>();
         int i = 0;
-        while(i < boardArray.length)
+        while(i < Board.getBoardArray().length)
         {
             int j = 0;
-            while(j < boardArray.length)
+            while(j < Board.getBoardArray().length)
             {
-                ArrayList<Integer> li = new ArrayList<Integer>();
+                List<Integer> li = new ArrayList<Integer>();
                 if(isValidMove(i,j))
                 {
                     li.add(i);
@@ -74,7 +75,5 @@ abstract class Piece
         }
         return listRes;
     }
-        // possible brute force: for each cell (x,y) on the board, call isValidMove(x,y)
-
 
 }

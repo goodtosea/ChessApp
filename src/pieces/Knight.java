@@ -1,5 +1,7 @@
 package pieces;
 
+import game.Board;
+
 /**
  * Chess piece that moves to and captures cells positioned at an L-like path from it,
  * specifically 2 rows and 1 column away, or 2 columns and 1 row away.
@@ -28,9 +30,9 @@ public class Knight extends Piece
     public boolean isValidMove(int x, int y) {
         if(isWhite != p[x][y].isWhite() || p[x][y] == null)
         {
-            if((y = this.y + 2 || y = this.y - 2) && (x = this.x + 1 || x = this.x - 1))
+            if((y == this.y + 2 || y == this.y - 2) && (x == this.x + 1 || x == this.x - 1))
                 return true;
-            if((x = this.x + 2 || x = this.x -2) && (y = this.y + 1 || y = this.y - 1))
+            if((x == this.x + 2 || x == this.x -2) && (y == this.y + 1 || y == this.y - 1))
                 return true;
         }
         return false;

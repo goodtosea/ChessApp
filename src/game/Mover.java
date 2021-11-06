@@ -59,24 +59,27 @@ public class Mover
         boolean pieceIsWhite = piece.isWhite();
         King playerKing = pieceIsWhite ? whiteKing : blackKing;
 
-        if (pieceIsWhite == isWhiteTurn && piece.isValidMove(x,y)) {
-            // store initial position and piece at destination
-            int sourceX = piece.getX();
-            int sourceY = piece.getY();
-            Piece destinationPiece = Board.getBoardArray()[x][y];
-
-            // carry out the move
-            Board.setPosition(piece, x, y);
-
-            // check if player's king is in check
-            boolean isInCheck = playerKing.isInCheck();
-
-            // undo move
-            Board.setPosition(piece, sourceX, sourceY);
-            Board.setPosition(destinationPiece, x, y);
-
-            return !isInCheck;
+        if (pieceIsWhite != isWhiteTurn || ! piece.isValidMove(x,y)) {
+            return false;
         }
+
+        // store initial position and piece at destination
+        int sourceX = piece.getX();
+        int sourceY = piece.getY();
+        Piece destinationPiece = Board.getBoardArray()[x][y];
+
+        // carry out the move
+        Board.setPosition(piece, x, y);
+
+        // check if player's king is in check
+        boolean isInCheck = playerKing.isInCheck();
+
+        // undo move
+        Board.setPosition(piece, sourceX, sourceY);
+        Board.setPosition(destinationPiece, x, y);
+
+        return !isInCheck;
+
 
     }
 

@@ -1,5 +1,7 @@
 package pieces;
 
+import game.Board;
+
 /**
  * Chess piece that can move 1 cell forward (or 2 on its first move) and captures one cell diagonally forward.
  * It can also promote to any other piece if it reaches the other side of the board.

@@ -2,7 +2,7 @@ package pieces;
 
 import java.util.*;
 
-import game.Mover;
+import game.*;
 
 /**
  * Chess piece that can move to and capture the 8 cells adjacent to it.
