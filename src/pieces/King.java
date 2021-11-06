@@ -10,7 +10,6 @@ import game.Mover;
  */
 public class King extends Piece
 {
-    private boolean isChecked;
 
     /**
      * Constructs a king and places it at a specified position on the board.
@@ -20,7 +19,6 @@ public class King extends Piece
      */
     public King(int x, int y, boolean isWhite) {
         super(x, y, isWhite);
-        isChecked = false;
     }
 
     /**
@@ -47,7 +45,19 @@ public class King extends Piece
      * @return true if the king is in check, and false otherwise
      */
     public boolean isInCheck() {
-        // if true, then maybe call isInCheckmate().
+        Map<Piece, List<List<Integer>>> allEnemyMoves = everyPieceValidMoves(!isWhite);
+        Set<Piece> enemyPieces = allEnemyMoves.keySet();
+
+        // try to find one move with King's position as destination, in which case return true
+        for (Piece piece : enemyPieces) {
+            List<List<Integer>> moves = allEnemyMoves.get(piece);
+            for (List<Integer> move : moves) {
+                if (move.get(0) == x && move.get(1) == y) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -64,11 +74,7 @@ public class King extends Piece
         (6) if one of the moves is valid, then return false. otherwise true
          */
 
-        if (!isChecked) {
-            return false;
-        }
-
-        Map<Piece, List<List<Integer>>> possibleMoves = everyPieceValidMoves();
+        Map<Piece, List<List<Integer>>> possibleMoves = everyPieceValidMoves(isWhite);
 
         Mover mover = new Mover();
         Set<Piece> pieces = possibleMoves.keySet();
@@ -90,7 +96,7 @@ public class King extends Piece
      * Finds all valid moves of all pieces belonging to a player.
      * @return a map connecting each piece to a list of all its valid moves
      */
-    private Map<Piece, List<List<Integer>>> everyPieceValidMoves() {
+    private Map<Piece, List<List<Integer>>> everyPieceValidMoves(boolean onlyWhitePieces) {
         Map<Piece, List<List<Integer>>> possibleMoves = new HashMap<>();
 
         // loop through board to find all of player's pieces
@@ -101,7 +107,7 @@ public class King extends Piece
 
                 // check if piece is right color, in which case call findAllValidMoves()
                 currPiece = boardArrCopy[x][y];
-                if (currPiece != null && currPiece.isWhite() == this.isWhite) {
+                if (currPiece != null && currPiece.isWhite() == onlyWhitePieces) {
                     possibleMoves.put(currPiece, currPiece.findAllValidMoves());
                 }
 
