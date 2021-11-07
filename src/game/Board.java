@@ -94,4 +94,16 @@ public class Board
     {
     	return boardArray.clone();
     }
+    
+    
+    /**
+     * Getter method for piece at specified location
+     * @param x - the column of the board
+     * @param y - the row of the board
+     * @return the piece on the xth column and yth row of the board
+     */
+    public static Piece getPiece(int x, int y) {
+        return boardArray[x][y];
+    }
+    
 }

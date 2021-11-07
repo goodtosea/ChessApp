@@ -64,9 +64,10 @@ class BoardTests
 	{
 		new Board();
 		Board.fillBoard();
-		Rook r = Board.getPiece(0,0);
+		Piece p = Board.getPiece(0,0);
+		Rook r = (Rook) p;
 		r.setHasMoved();
-		Board.getBoardArray();
-		assertEquals(true, Board.getBoardArray()[0][0].hasMoved());
+		Piece[][] board = Board.getBoardArray();
+		assertEquals(true, ((Rook) board[0][0]).hasMoved());
 	}
 }
