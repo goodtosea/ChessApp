@@ -37,10 +37,23 @@ public class Mover
      * @param y - the row to attempt to move to
      * @return true if the piece moves successfully, and false otherwise
      */
-    protected boolean tryMovePiece(Piece piece, int x, int y) {
-        // if (isValidMove(...)) then move
+    protected static boolean tryMovePiece(Piece piece, int x, int y) {
         if (isValidMove(piece, x, y)) {
-            Board.setPosition(piece, x, y);
+
+            if (moveIsCastling(piece, x, y)) {
+                int directionMoved = Integer.signum(x-piece.getX());
+                int rookX = (directionMoved == 1 ? Board.getBoardArray().length - 1 : 0);
+                Piece rook = Board.getPiece(rookX, y);
+                Board.setPosition(piece, x, y);
+                Board.setPosition(rook, x-directionMoved, y);
+                Board.setPosition(null, rookX, y);
+            }
+            // else if (moveIsEnPassant) ...
+            // else if (pawnPromotion) ...
+            else {   // vanilla case
+                Board.setPosition(piece, x, y);
+            }
+
             isWhiteTurn = !isWhiteTurn;
             return true;
         }
@@ -54,7 +67,7 @@ public class Mover
      * @param y - the row to simulate a move to
      * @return true if move follows the rules of chess, and false otherwise
      */
-    public boolean isValidMove(Piece piece, int x, int y) {
+    public static boolean isValidMove(Piece piece, int x, int y) {
 
         boolean pieceIsWhite = piece.isWhite();
         King playerKing = pieceIsWhite ? whiteKing : blackKing;
@@ -80,7 +93,19 @@ public class Mover
 
         return !isInCheck;
 
+    }
 
+    /**
+     * Assuming that a move passes its piece's isValidMove() method, determines if the move is castling.
+     * Can't be called after changing state of board.
+     * @param piece - the piece to move
+     * @param x - the destination column
+     * @param y - the destination row
+     * @return
+     */
+    private static boolean moveIsCastling(Piece piece, int x, int y) {
+        int startX = piece.getX();
+        return (piece instanceof King) && (Math.abs(x-startX) == 2);
     }
 
 }

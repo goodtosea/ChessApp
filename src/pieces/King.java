@@ -10,6 +10,7 @@ import game.*;
  */
 public class King extends Piece
 {
+    private boolean hasMoved;
 
     /**
      * Constructs a king and places it at a specified position on the board.
@@ -19,6 +20,7 @@ public class King extends Piece
      */
     public King(int x, int y, boolean isWhite) {
         super(x, y, isWhite);
+        hasMoved = false;
     }
 
     /**
@@ -37,7 +39,23 @@ public class King extends Piece
         boolean destinationNotSameColor =
                 boardArrCopy[x][y] == null ? true : boardArrCopy[x][y].isWhite() != this.isWhite;
 
-        return xLessThan2 && yLessThan2 && bothNot0 && destinationNotSameColor;
+        boolean castling = false;
+        int deltaX = Integer.signum(x-this.x);
+        // if hasn't moved yet, and move in question is 2 cells horizontal
+        if (!hasMoved && y == this.y && Math.abs(deltaX) == 2) {
+            for (int i = this.x + deltaX; i < boardArrCopy.length && i >= 0; i += deltaX) {
+                if (boardArrCopy[i][y] instanceof Rook) {
+                    if (((Rook) boardArrCopy[i][y]).hasMoved() && boardArrCopy[i][y].isWhite()) {
+                        castling = true;
+                    }
+                }
+                else if (boardArrCopy[i][y] != null) {
+                    break;
+                }
+            }
+        }
+
+        return (xLessThan2 && yLessThan2 && bothNot0 && destinationNotSameColor) || castling;
     }
 
     /**
@@ -65,15 +83,6 @@ public class King extends Piece
      * @return true if king is in checkmate, and false otherwise
      */
     private boolean isInCheckmate() {
-        /*
-        (1) is in check?
-        (2) call findAllValidMoves() on every piece belonging to player
-        (3) store all moves somehow
-        (4) instantiate Mover class
-        (5) loop through possible moves and call Mover's isValidMove() on each one
-        (6) if one of the moves is valid, then return false. otherwise true
-         */
-
         Map<Piece, List<List<Integer>>> possibleMoves = everyPieceValidMoves(isWhite);
 
         Mover mover = new Mover();
