@@ -80,5 +80,13 @@ public class Rook extends Piece
     	}
     	return false;
     }
+
+	/**
+	 * Accessor for if Rook has moved
+	 * @return true if Rook has moved, and false otherwise
+	 */
+	public boolean hasMoved() {
+    	return hasMoved;
+	}
     
 }
