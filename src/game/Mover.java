@@ -10,6 +10,7 @@ public class Mover
     private static boolean isWhiteTurn;
     private static King whiteKing;
     private static King blackKing;
+    private MoveHistory Mhistory;
 
     /**
      * Constructs a mover.
@@ -30,6 +31,8 @@ public class Mover
         this.blackKing = blackKing;
     }
 
+
+
     /**
      * Moves a piece if the move follows the rules of chess.
      * @param piece - the piece to attempt to move
@@ -38,14 +41,36 @@ public class Mover
      * @return true if the piece moves successfully, and false otherwise
      */
     protected boolean tryMovePiece(Piece piece, int x, int y) {
+        List<Integer> start = new ArrayList<Integer>();
+        start.add(piece.getX());
+        start.add(piece.getY());
+
         // if (isValidMove(...)) then move
         if (isValidMove(piece, x, y)) {
+
             Board.setPosition(piece, x, y);
             isWhiteTurn = !isWhiteTurn;
+            List<Integer> end = new ArrayList<Integer>();
+            end.add(x);
+            end.add(y);
+            Move lastMove = new Move(piece, start, end, piece.isWhite());
+            Mhistory.storeMove(lastMove);
+
+            if(piece instanceof Pawn)
+            {
+                if(piece.isEnPassantPossible())
+                {
+                    int removeX = Mhistory.getHistory().get(history.getHistory().size() - 2).getEnd().get(0);
+                    int removeY = Mhistory.getHistory().get(history.getHistory().size() - 2).getEnd().get(1);
+                    Board.setPosition(null, removeX, removeY);
+                }
+
+            }
             return true;
         }
         return false;
     }
+
 
     /**
      * Checks if a move follows the rules of chess.
