@@ -7,7 +7,7 @@ import game.*;
  * Chess piece that can move 1 cell forward (or 2 on its first move) and captures one cell diagonally forward.
  * It can also promote to any other piece if it reaches the other side of the board.
  */
-public class Pawn extends Piece, MoveHistory
+public class Pawn extends Piece
 {
 
     private boolean hasMoved;
@@ -44,15 +44,16 @@ public class Pawn extends Piece, MoveHistory
 
         enPassantPossible = false;
 
+        // Checking isValidMove for White Pawns
         if(isWhite)
         {
             if((x == this.x + 1 && y == this.y + 1) || (x == this.x - 1 && y == this.y + 1))
                 if(isWhite != p[x][y].isWhite())
                     return true;
 
-            if(!mv.getHistory().getLastMove().isPawn().isWhite())
+            if(!mv.getMhistory().getLastMove().isPawn().isWhite())
             {
-                Move previousMove = mv.getHistory().getLastMove();
+                Move previousMove = mv.getMhistory().getLastMove();
                 if(previousMove.getEnd().get(1) - previousMove.getStart().get(1) == -2)
                 {
                     if(previousMove.getEnd().get(1) == this.y)
@@ -102,16 +103,16 @@ public class Pawn extends Piece, MoveHistory
             return false;
         }
 
-
+        // Checking isValidMove for Black Pawns
         else
         {
             if((x == this.x + 1 && y == this.y - 1) || (x == this.x - 1 && y == this.y - 1))
                 if(isWhite != p[x][y].isWhite())
                     return true;
 
-            if(mv.getHistory().getLastMove().isPawn().isWhite())
+            if(mv.getMhistory().getLastMove().isPawn().isWhite())
             {
-                Move previousMove = mv.getHistory().getLastMove();
+                Move previousMove = mv.getMhistory().getLastMove();
                 if(previousMove.getEnd().get(1) - previousMove.getStart().get(1) == 2)
                 {
                     if(previousMove.getEnd().get(1) == this.y)

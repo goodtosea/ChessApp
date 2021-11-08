@@ -31,7 +31,14 @@ public class Mover
         this.blackKing = blackKing;
     }
 
-
+    /**
+     * Gets the Mhistory object of the MoveHistory class
+     * @return the move history object
+     */
+    public MoveHistory getMhistory()
+    {
+        return Mhistory;
+    }
 
     /**
      * Moves a piece if the move follows the rules of chess.
