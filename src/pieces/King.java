@@ -39,23 +39,7 @@ public class King extends Piece
         boolean destinationNotSameColor =
                 boardArrCopy[x][y] == null ? true : boardArrCopy[x][y].isWhite() != this.isWhite;
 
-        boolean castling = false;
-        int deltaX = Integer.signum(x-this.x);
-        // if hasn't moved yet, and move in question is 2 cells horizontal
-        if (!hasMoved && y == this.y && Math.abs(deltaX) == 2) {
-            for (int i = this.x + deltaX; i < boardArrCopy.length && i >= 0; i += deltaX) {
-                if (boardArrCopy[i][y] instanceof Rook) {
-                    if (((Rook) boardArrCopy[i][y]).hasMoved() && boardArrCopy[i][y].isWhite()) {
-                        castling = true;
-                    }
-                }
-                else if (boardArrCopy[i][y] != null) {
-                    break;
-                }
-            }
-        }
-
-        return (xLessThan2 && yLessThan2 && bothNot0 && destinationNotSameColor) || castling;
+        return xLessThan2 && yLessThan2 && bothNot0 && destinationNotSameColor;
     }
 
     /**
@@ -124,6 +108,26 @@ public class King extends Piece
         }
 
         return possibleMoves;
+    }
+
+    /**
+     * Used for castling later.
+     * @return true if hasMoved was set to true
+     */
+    public boolean setHasMoved() {
+        if (hasMoved == false) {
+            hasMoved = true;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Accessor for if King has moved
+     * @return true if King has moved, and false otherwise
+     */
+    public boolean hasMoved() {
+        return hasMoved;
     }
 
 }
