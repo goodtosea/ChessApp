@@ -35,4 +35,14 @@ public class ChessController
 		
 	}
 	
+		
+	/**
+	 * Logic for what happens when a button is clicked
+	 * Calls controller methods related to movement and simplifies the actionListener code for each button
+	 */
+	public void onSquareClick()
+	{
+		
+	}
+	
 }
