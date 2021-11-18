@@ -12,7 +12,7 @@ public class BoardWindow
 {
 
 	private JFrame frame;
-	private ChessButton[][] board;
+	private static ChessButton[][] board;
 
 	/**
 	 * Launch the application.
@@ -61,7 +61,7 @@ public class BoardWindow
 	 * @param x coordinate of button to highlight
 	 * @param y coordinate of button to highlight
 	 */
-	public void highlightSquare(int x, int y)
+	public static void highlightSquare(int x, int y)
 	{
 		
 	}
@@ -70,7 +70,7 @@ public class BoardWindow
 	/**
 	 * Opens a panel on top of the board that prompts the user to select a type of piece for the promotion
 	 */
-	public void pawnPromotion()
+	public static void pawnPromotion()
 	{
 		
 	}
@@ -82,7 +82,7 @@ public class BoardWindow
 	 * @param x coordinate of the button
 	 * @param y coordinate of the button
 	 */
-	public void setIcon(Icon icon, int x, int y)
+	public static void setIcon(Icon icon, int x, int y)
 	{
 		
 	}
