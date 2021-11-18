@@ -18,7 +18,7 @@ public class Board
 
 	
     /**
-     * Sets the value of a cell in the board to a specified piece.
+     * Sets the value of a cell in the board to a specified piece and updates the piece's current position.
      * @param piece - the piece to set the cell's value to
      * @param x - the column of the cell
      * @param y - the row of the cell
@@ -26,6 +26,8 @@ public class Board
     public static void setPosition(Piece piece, int x, int y)
     {
         boardArray[x][y] = piece;
+        piece.setX(x);
+        piece.setY(y);
     }
 
     

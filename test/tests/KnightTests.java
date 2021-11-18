@@ -1,4 +1,6 @@
 package tests;
+import game.*;
+import pieces.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,9 +10,11 @@ class KnightTests
 {
 
 	@Test
-	void test()
+	void movementTest()
 	{
-		fail("Not yet implemented");
+		new Board();
+		Knight k = new Knight(3, 4, true);
+		
 	}
 
 }

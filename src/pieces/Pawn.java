@@ -87,8 +87,28 @@ public class Pawn extends Piece
             }
             return false;
         }
-
-
-
     }
+    
+    
+    /**
+     * Used for power moving
+     * @return true if hasMoved was set to true
+     */
+    public boolean setHasMoved() {
+    	if (hasMoved == false) {
+    		hasMoved = true;
+    		return true;
+    	}
+    	return false;
+    }
+
+    
+	/**
+	 * Accessor for if Pawn has moved
+	 * @return true if Pawn has moved, and false otherwise
+	 */
+	public boolean hasMoved() {
+    	return hasMoved;
+	}
+	
 }
