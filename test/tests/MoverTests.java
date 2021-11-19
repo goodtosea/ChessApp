@@ -27,5 +27,18 @@ public class MoverTests {
         }
 
         assertTrue(Mover.isValidMove(Board.getPiece(0,0), 0, 1)); // move bottom-left rook
+
+        // set up castling
+        ((Rook) Board.getPiece(0,0)).setHasMoved();
+        Board.setPosition(null, 1,0);
+        Board.setPosition(null, 2,0);
+        Board.setPosition(null, 3,0);
+        Board.setPosition(null, 5,0);
+        Board.setPosition(null, 6,0);
+        assertFalse(Mover.isValidMove(Board.getPiece(4,0), 2, 0));
+        assertFalse(Mover.isValidMove(Board.getPiece(4,0), 7, 0));
+        assertTrue(Mover.isValidMove(Board.getPiece(4,0), 6, 0));
+        ((King) Board.getPiece(4, 0)).setHasMoved();
+        assertFalse(Mover.isValidMove(Board.getPiece(4,0), 6, 0));
     }
 }

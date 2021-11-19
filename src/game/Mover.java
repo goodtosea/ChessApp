@@ -114,13 +114,15 @@ public class Mover
         }
 
         King king = (King) piece;
+        boolean kingIsWhite = king.isWhite();
 
-        int deltaX = Integer.signum(x-king.getX());
+        int deltaX = x - king.getX();
+        int stepDirectionX = Integer.signum(deltaX);
         // if hasn't moved yet, and move in question is 2 cells only horizontal
         if (!king.hasMoved() && y == king.getY() && Math.abs(deltaX) == 2) {
-            for (int i = king.getX() + deltaX; i < boardArrCopy.length && i >= 0; i += deltaX) {
+            for (int i = king.getX() + stepDirectionX; i < boardArrCopy.length && i >= 0; i += stepDirectionX) {
                 if (boardArrCopy[i][y] instanceof Rook) {
-                    if (((Rook) boardArrCopy[i][y]).hasMoved() && boardArrCopy[i][y].isWhite()) {
+                    if (!((Rook) boardArrCopy[i][y]).hasMoved() && boardArrCopy[i][y].isWhite() == kingIsWhite) {
                         castling = true;
                     }
                 }
