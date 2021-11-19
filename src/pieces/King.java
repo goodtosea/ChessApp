@@ -25,6 +25,7 @@ public class King extends Piece
 
     /**
      * Checks if the piece can move in the specified way, not accounting for check or player turn.
+     * Does not account for castling.
      * @param x - the column to move to
      * @param y - the row to move to
      * @return true if the move is valid, and false otherwise

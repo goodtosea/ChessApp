@@ -26,6 +26,9 @@ public class Board
     public static void setPosition(Piece piece, int x, int y)
     {
         boardArray[x][y] = piece;
+        if (piece != null) {
+            piece.setPosition(x, y);
+        }
     }
 
     
