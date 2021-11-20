@@ -52,6 +52,24 @@ public class Mover
         start.add(piece.getX());
         start.add(piece.getY());
 
+        if(piece instanceof Pawn)
+        {
+            if(tryMoveIsEnPassantPossible(piece, x, y))
+            {
+                Board.setPosition(piece, x, y);
+                List<Integer> end = new ArrayList<Integer>();
+                end.add(x);
+                end.add(y);
+                int removeX = Mhistory.getHistory().get(history.getHistory().size() - 2).getEnd().get(0);
+                int removeY = Mhistory.getHistory().get(history.getHistory().size() - 2).getEnd().get(1);
+                Board.setPosition(null, removeX, removeY);
+                Move lastMove = new Move(piece, start, end, piece.isWhite());
+                Mhistory.storeMove(lastMove);
+                return true;
+            }
+
+        }
+        
         // if (isValidMove(...)) then move
         if (isValidMove(piece, x, y)) {
 
@@ -62,20 +80,57 @@ public class Mover
             end.add(y);
             Move lastMove = new Move(piece, start, end, piece.isWhite());
             Mhistory.storeMove(lastMove);
-
-            if(piece instanceof Pawn)
-            {
-                if(piece.isEnPassantPossible())
-                {
-                    int removeX = Mhistory.getHistory().get(history.getHistory().size() - 2).getEnd().get(0);
-                    int removeY = Mhistory.getHistory().get(history.getHistory().size() - 2).getEnd().get(1);
-                    Board.setPosition(null, removeX, removeY);
-                }
-
-            }
             return true;
         }
         return false;
+    }
+
+    public boolean tryMoveIsEnPassantPossible(Piece piece, int x, int y)
+    {
+        Move previousMove = Mhistory.getLastMove();
+
+        if(previousMove.isPawn() && !previousMove.isWhite())
+        {
+            if(previousMove.getEnd().get(1) - previousMove.getStart().get(1) == -2) {
+                if (previousMove.getEnd().get(1) == piece.getY()) {
+                    if (piece.getX() == previousMove.getEnd().get(0) - 1) {
+                        if (x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) + 1) {
+
+                            return true;
+                        }
+
+                    }
+                    if (piece.getX() == previousMove.getEnd().get(0) + 1) {
+                        if (x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) + 1) {
+
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(previousMove.isPawn().isWhite()) {
+//            Move previousMove = mv.getMhistory().getLastMove();
+            if (previousMove.getEnd().get(1) - previousMove.getStart().get(1) == 2) {
+                if (previousMove.getEnd().get(1) == piece.getY()) {
+                    if (piece.getX() == previousMove.getEnd().get(0) - 1) {
+                        if (x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) - 1) {
+
+                            return true;
+                        }
+                    }
+                    if (piece.getX() == previousMove.getEnd().get(0) + 1) {
+                        if (x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) - 1) {
+
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+
     }
 
 

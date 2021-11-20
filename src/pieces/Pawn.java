@@ -26,6 +26,22 @@ public class Pawn extends Piece
     }
 
     /**
+     * Getter method for x coordinate.
+     * @return x the row of the piece
+     */
+    public int getX(){
+        return x;
+    }
+
+    /**
+     * Getter method for x coordinate.
+     * @return x the row of the piece
+     */
+    public int getY(){
+        return y;
+    }
+
+    /**
      * Checks if the En Passant is Possible.
      * @return true is En Passant is Possible, else false
      */
@@ -51,34 +67,34 @@ public class Pawn extends Piece
                 if(isWhite != p[x][y].isWhite())
                     return true;
 
-            if(!mv.getMhistory().getLastMove().isPawn().isWhite())
-            {
-                Move previousMove = mv.getMhistory().getLastMove();
-                if(previousMove.getEnd().get(1) - previousMove.getStart().get(1) == -2)
-                {
-                    if(previousMove.getEnd().get(1) == this.y)
-                    {
-                        if(this.x == previousMove.getEnd().get(0) - 1)
-                        {
-                            if(x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) + 1)
-                            {
-                                enPassantPossible = true;
-                                return true;
-                            }
-
-                        }
-                        if(this.x == previousMove.getEnd().get(0) + 1)
-                        {
-                            if(x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) + 1)
-                            {
-                                enPassantPossible = true;
-                                return true;
-                            }
-                        }
-                    }
-                }
-
-            }
+//            if(!mv.getMhistory().getLastMove().isPawn().isWhite())
+//            {
+//                Move previousMove = mv.getMhistory().getLastMove();
+//                if(previousMove.getEnd().get(1) - previousMove.getStart().get(1) == -2)
+//                {
+//                    if(previousMove.getEnd().get(1) == this.y)
+//                    {
+//                        if(this.x == previousMove.getEnd().get(0) - 1)
+//                        {
+//                            if(x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) + 1)
+//                            {
+//                                enPassantPossible = true;
+//                                return true;
+//                            }
+//
+//                        }
+//                        if(this.x == previousMove.getEnd().get(0) + 1)
+//                        {
+//                            if(x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) + 1)
+//                            {
+//                                enPassantPossible = true;
+//                                return true;
+//                            }
+//                        }
+//                    }
+//                }
+//
+//            }
 
             if(!hasMoved)
             {
@@ -110,33 +126,33 @@ public class Pawn extends Piece
                 if(isWhite != p[x][y].isWhite())
                     return true;
 
-            if(mv.getMhistory().getLastMove().isPawn().isWhite())
-            {
-                Move previousMove = mv.getMhistory().getLastMove();
-                if(previousMove.getEnd().get(1) - previousMove.getStart().get(1) == 2)
-                {
-                    if(previousMove.getEnd().get(1) == this.y)
-                    {
-                        if(this.x == previousMove.getEnd().get(0) - 1)
-                        {
-                            if(x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) - 1)
-                            {
-                                enPassantPossible = true;
-                                return true;
-                            }
-                        }
-                        if(this.x == previousMove.getEnd().get(0) + 1)
-                        {
-                            if(x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) - 1)
-                            {
-                                enPassantPossible = true;
-                                return true;
-                            }
-                        }
-                    }
-                }
-
-            }
+//            if(mv.getMhistory().getLastMove().isPawn().isWhite())
+//            {
+//                Move previousMove = mv.getMhistory().getLastMove();
+//                if(previousMove.getEnd().get(1) - previousMove.getStart().get(1) == 2)
+//                {
+//                    if(previousMove.getEnd().get(1) == this.y)
+//                    {
+//                        if(this.x == previousMove.getEnd().get(0) - 1)
+//                        {
+//                            if(x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) - 1)
+//                            {
+//                                enPassantPossible = true;
+//                                return true;
+//                            }
+//                        }
+//                        if(this.x == previousMove.getEnd().get(0) + 1)
+//                        {
+//                            if(x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) - 1)
+//                            {
+//                                enPassantPossible = true;
+//                                return true;
+//                            }
+//                        }
+//                    }
+//                }
+//
+//            }
 
             if(!hasMoved)
             {
