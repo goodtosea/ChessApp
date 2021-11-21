@@ -8,9 +8,6 @@ import game.Board;
  */
 public class Knight extends Piece
 {
-
-    Piece[][] p = Board.getBoardArray();
-
     /**
      * Constructs a knight and places it at a specified position on the board.
      * @param x - the column to place the knight
@@ -28,7 +25,7 @@ public class Knight extends Piece
      */
     @Override
     public boolean isValidMove(int x, int y) {
-        if(p[x][y] == null || isWhite != p[x][y].isWhite())
+        if(Board.getPiece(x, y) == null || isWhite != Board.getPiece(x, y).isWhite())
         {
             if((y == this.y + 2 || y == this.y - 2) && (x == this.x + 1 || x == this.x - 1))
                 return true;

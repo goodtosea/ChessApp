@@ -77,6 +77,9 @@ public abstract class Piece
                 }
             }
         }
+        if (listRes.size() == 0) {
+            return null;
+        }
         return listRes;
     }
 

@@ -47,6 +47,11 @@ public class Mover
             return false;
         }
 
+        // record initial position to store in history later
+        List<Integer> start = new ArrayList<>();
+        start.add(piece.getX());
+        start.add(piece.getY());
+
         // if (isValidMove(...)) then move
         if (isValidMove(piece, x, y, true)) {
 
@@ -73,9 +78,6 @@ public class Mover
             trySetHasMoved(piece);
 
             // add move to history
-            List<Integer> start = new ArrayList<>();
-            start.add(piece.getX());
-            start.add(piece.getY());
             List<Integer> end = new ArrayList<>();
             end.add(x);
             end.add(y);

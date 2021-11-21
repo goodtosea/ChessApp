@@ -103,7 +103,10 @@ public class King extends Piece
                 // check if piece is right color, in which case call findAllValidMoves()
                 currPiece = boardArrCopy[x][y];
                 if (currPiece != null && currPiece.isWhite() == onlyWhitePieces) {
-                    possibleMoves.put(currPiece, currPiece.findAllValidMoves(accountForCheck));
+                    List<List<Integer>> pieceValidMoves = currPiece.findAllValidMoves(accountForCheck);
+                    if (pieceValidMoves != null) {
+                        possibleMoves.put(currPiece, pieceValidMoves);
+                    }
                 }
 
             }
