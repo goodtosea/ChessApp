@@ -36,7 +36,7 @@ public class King extends Piece
 
         boolean xLessThan2 = Math.abs(x-this.x) < 2;
         boolean yLessThan2 = Math.abs(y-this.y) < 2;
-        boolean bothNot0 = x != this.x && y != this.y;
+        boolean bothNot0 = x != this.x || y != this.y;
         boolean destinationNotSameColor =
                 boardArrCopy[x][y] == null ? true : boardArrCopy[x][y].isWhite() != this.isWhite;
 
@@ -48,7 +48,7 @@ public class King extends Piece
      * @return true if the king is in check, and false otherwise
      */
     public boolean isInCheck() {
-        Map<Piece, List<List<Integer>>> allEnemyMoves = everyPieceValidMoves(!isWhite);
+        Map<Piece, List<List<Integer>>> allEnemyMoves = everyPieceValidMoves(!isWhite, false);
         Set<Piece> enemyPieces = allEnemyMoves.keySet();
 
         // try to find one move with King's position as destination, in which case return true
@@ -68,21 +68,22 @@ public class King extends Piece
      * @return true if king is in checkmate, and false otherwise
      */
     public boolean isInCheckmate() {
-        Map<Piece, List<List<Integer>>> possibleMoves = everyPieceValidMoves(isWhite);
+//        Map<Piece, List<List<Integer>>> possibleMoves = everyPieceValidMoves(isWhite, true);
+        return everyPieceValidMoves(isWhite, true).size() == 0;
 
-        Mover mover = new Mover();
-        Set<Piece> pieces = possibleMoves.keySet();
+//        Mover mover = new Mover();
+//        Set<Piece> pieces = possibleMoves.keySet();
 
         // try to find at least one valid move, in which case return false
-        for (Piece piece : pieces) {
-            List<List<Integer>> pieceValidMoves = possibleMoves.get(piece);
-            for (List<Integer> move : pieceValidMoves) {
-                if (mover.isValidMove(piece, move.get(0), move.get(1)) == true) {
-                    return false;
-                }
-            }
-        }
-        return true;
+//        for (Piece piece : pieces) {
+//            List<List<Integer>> pieceValidMoves = possibleMoves.get(piece);
+//            for (List<Integer> move : pieceValidMoves) {
+//                if (mover.isValidMove(piece, move.get(0), move.get(1), true) == true) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
 
     }
 
@@ -90,7 +91,7 @@ public class King extends Piece
      * Finds all valid moves of all pieces belonging to a player.
      * @return a map connecting each piece to a list of all its valid moves
      */
-    private Map<Piece, List<List<Integer>>> everyPieceValidMoves(boolean onlyWhitePieces) {
+    private Map<Piece, List<List<Integer>>> everyPieceValidMoves(boolean onlyWhitePieces, boolean accountForCheck) {
         Map<Piece, List<List<Integer>>> possibleMoves = new HashMap<>();
 
         // loop through board to find all of player's pieces
@@ -102,7 +103,7 @@ public class King extends Piece
                 // check if piece is right color, in which case call findAllValidMoves()
                 currPiece = boardArrCopy[x][y];
                 if (currPiece != null && currPiece.isWhite() == onlyWhitePieces) {
-                    possibleMoves.put(currPiece, currPiece.findAllValidMoves());
+                    possibleMoves.put(currPiece, currPiece.findAllValidMoves(accountForCheck));
                 }
 
             }

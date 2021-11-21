@@ -1,6 +1,6 @@
 package pieces;
 
-import game.Board;
+import game.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,25 +61,21 @@ public abstract class Piece
      * Finds all the ways the piece can move, not accounting for check or player turn.
      * @return an ArrayList arr such that the valid moves are to the cells x=arr.get(2k), y=arr.get(2k+1) for integers k
      */
-    public List<List<Integer>> findAllValidMoves()
+    public List<List<Integer>> findAllValidMoves(boolean accountForCheck)
     {
         List<List<Integer>> listRes = new ArrayList<List<Integer>>();
-        int i = 0;
-        while(i < Board.getBoardArray().length)
+        for (int x = 0; x < Board.getBoardArray().length; x++)
         {
-            int j = 0;
-            while(j < Board.getBoardArray().length)
+            for (int y = 0; y < Board.getBoardArray()[0].length; y++)
             {
-                if(isValidMove(i,j))
+                if(Mover.isValidMove(this, x, y, accountForCheck))
                 {
                     List<Integer> li = new ArrayList<Integer>();
-                    li.add(i);
-                    li.add(j);
+                    li.add(x);
+                    li.add(y);
                     listRes.add(li);
                 }
-                j++;
             }
-            i++;
         }
         return listRes;
     }

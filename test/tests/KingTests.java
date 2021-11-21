@@ -62,10 +62,13 @@ class KingTests
 		Board b = new Board();
 		King k = new King(3, 3, true);
 		Pawn p1 = new Pawn(2, 4, false);
+		King k2 = new King(7, 7, false);
+		Mover m = new Mover(true, k, k);
 		Board.setPosition(k, 3, 3);
-		Board.setPosition(p1, 3, 4);
+		Board.setPosition(p1, 2, 4);
+		Board.setPosition(k2, 7, 7);
 		assertEquals(true, k.isInCheck());
-		Board.setPosition(null, 3, 4);
+		Board.setPosition(null, 2, 4);
 		assertEquals(false, k.isInCheck());
 	}
 	
@@ -75,6 +78,7 @@ class KingTests
 	{
 		Board b = new Board();
 		King k = new King(2, 2, true);
+		Mover m = new Mover(true, k, new King(7, 7, false));
 		Bishop b1 = new Bishop(3, 5, false);
 		Bishop b2 = new Bishop(4, 4, false);
 		Bishop b3 = new Bishop(5, 3, false);
