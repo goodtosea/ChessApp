@@ -31,8 +31,8 @@ public class Rook extends Piece
     	if (x == this.x ^ y == this.y)
     	{
     		// Pick the change that's greatest (one will always be 0 in a legal move)
-    		int deltaX = Math.abs(x - this.x);
-        	int deltaY = Math.abs(y - this.y);
+    		int deltaX = x - this.x;
+        	int deltaY = y - this.y;
         	int pathLength = deltaX == 0 ? deltaY : deltaX;
         	
         	// No movement isn't a valid move
@@ -80,6 +80,14 @@ public class Rook extends Piece
     	}
     	return false;
     }
+
+	/**
+	 * Accessor for if Rook has moved
+	 * @return true if Rook has moved, and false otherwise
+	 */
+	public boolean hasMoved() {
+    return hasMoved;
+	}
     
     
     public boolean hasMoved() {

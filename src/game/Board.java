@@ -26,8 +26,10 @@ public class Board
     public static void setPosition(Piece piece, int x, int y)
     {
         boardArray[x][y] = piece;
-        piece.setX(x);
-        piece.setY(y);
+        if (piece != null) {
+            piece.setX(x);
+            piece.setY(y);
+        }
     }
 
     
@@ -96,8 +98,8 @@ public class Board
     {
     	return boardArray.clone();
     }
-    
-    
+
+  
     /**
      * Getter method for piece at specified location
      * @param x - the column of the board
@@ -107,5 +109,5 @@ public class Board
     public static Piece getPiece(int x, int y) {
         return boardArray[x][y];
     }
-    
+  
 }

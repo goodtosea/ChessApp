@@ -28,7 +28,7 @@ public class Knight extends Piece
      */
     @Override
     public boolean isValidMove(int x, int y) {
-        if(isWhite != p[x][y].isWhite() || p[x][y] == null)
+        if(p[x][y] == null || isWhite != p[x][y].isWhite())
         {
             if((y == this.y + 2 || y == this.y - 2) && (x == this.x + 1 || x == this.x - 1))
                 return true;
