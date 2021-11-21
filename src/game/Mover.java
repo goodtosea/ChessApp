@@ -10,6 +10,7 @@ public class Mover
     private static boolean isWhiteTurn;
     private static King whiteKing;
     private static King blackKing;
+    private MoveHistory Mhistory;
 
     /**
      * Constructs a mover.
@@ -31,13 +32,26 @@ public class Mover
     }
 
     /**
+     * Gets the Mhistory object of the MoveHistory class
+     * @return the move history object
+     */
+    public MoveHistory getMhistory()
+    {
+        return Mhistory;
+    }
+
+    /**
      * Moves a piece if the move follows the rules of chess.
      * @param piece - the piece to attempt to move
      * @param x - the column to attempt to move to
      * @param y - the row to attempt to move to
+     * @param promoteTo - the piece to convert the pawn to
      * @return true if the piece moves successfully, and false otherwise
      */
     public static boolean tryMovePiece(Piece piece, int x, int y) {
+        List<Integer> start = new ArrayList<Integer>(); // TODO: Should only add the move if the move is going to happen
+        start.add(piece.getX());
+        start.add(piece.getY());
         if (isValidMove(piece, x, y)) {
 
             if (tryMoveIsCastling(piece, x, y)) {
@@ -53,12 +67,19 @@ public class Mover
             else {   // vanilla case
                 Board.setPosition(piece, x, y);
             }
-
+          
             isWhiteTurn = !isWhiteTurn;
+            List<Integer> end = new ArrayList<Integer>();
+            end.add(x);
+            end.add(y);
+            Move lastMove = new Move(piece, start, end, piece.isWhite());
+            Mhistory.storeMove(lastMove);
+            
             return true;
         }
         return false;
     }
+
 
     /**
      * Checks if a move follows the rules of chess.
@@ -95,9 +116,9 @@ public class Mover
         Board.setPosition(destinationPiece, x, y);
 
         return !isInCheck;
-
     }
 
+  
     /**
      * Checks if a move is valid castling.
      * @param piece - the piece to move
@@ -147,5 +168,26 @@ public class Mover
         int startX = piece.getX();
         return (piece instanceof King) && (Math.abs(x-startX) == 2);
     }
-
+    
+    
+    /**
+     * Does pawn promotion on the board, replacing the pawn on the board with what is given in the parameters
+     * @param pawn is the pawn to be promoted
+     * @param replacement is the type of piece to replace pawn
+     * @return true if the promotion is successful, false otherwise (can be used to give the signal to view potentially)
+     */
+    private boolean pawnPromotion(Pawn pawn, Piece replacement)
+    {
+    	Piece[][] board = Board.getBoardArray();
+    	if (pawn.isWhite() && pawn.getY() == board[0].length)
+    	{
+    		Board.setPosition(replacement, pawn.getX(), pawn.getY());
+    	}
+    	else if (!pawn.isWhite() && pawn.getY() == 0)
+    	{
+    		Board.setPosition(replacement, pawn.getX(), pawn.getY());
+    	}
+    	return false;
+    }
+    
 }
