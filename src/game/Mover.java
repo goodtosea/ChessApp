@@ -37,7 +37,7 @@ public class Mover
      * @param y - the row to attempt to move to
      * @return true if the piece moves successfully, and false otherwise
      */
-    protected static boolean tryMovePiece(Piece piece, int x, int y) {
+    public static boolean tryMovePiece(Piece piece, int x, int y) {
         if (isValidMove(piece, x, y)) {
 
             if (tryMoveIsCastling(piece, x, y)) {
