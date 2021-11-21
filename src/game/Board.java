@@ -18,7 +18,7 @@ public class Board
 
 	
     /**
-     * Sets the value of a cell in the board to a specified piece.
+     * Sets the value of a cell in the board to a specified piece and updates the piece's current position.
      * @param piece - the piece to set the cell's value to
      * @param x - the column of the cell
      * @param y - the row of the cell
@@ -27,7 +27,8 @@ public class Board
     {
         boardArray[x][y] = piece;
         if (piece != null) {
-            piece.setPosition(x, y);
+            piece.setX(x);
+            piece.setY(y);
         }
     }
 
@@ -98,6 +99,7 @@ public class Board
     	return boardArray.clone();
     }
 
+  
     /**
      * Getter method for piece at specified location
      * @param x - the column of the board
@@ -107,4 +109,5 @@ public class Board
     public static Piece getPiece(int x, int y) {
         return boardArray[x][y];
     }
+  
 }

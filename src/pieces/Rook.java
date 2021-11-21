@@ -89,4 +89,9 @@ public class Rook extends Piece
     return hasMoved;
 	}
     
+    
+    public boolean hasMoved() {
+    	return hasMoved;
+	}
+    
 }
