@@ -1,5 +1,7 @@
 package game;
 
+import java.util.*;
+
 import pieces.*;
 
 /**
@@ -7,32 +9,32 @@ import pieces.*;
  */
 public class Move{
 
-    private Piece pieceType;
+    private Piece piece;
     private boolean isWhite;
     private List<Integer> start;
     private List<Integer> end;
 
     /**
-     * Constructs a move with the pieceType, color and start and end position.
-     * @param pieceType the type of Piece
+     * Constructs a move with the piece, color and start and end position.
+     * @param piece the piece that is moved
      * @param isWhite the color of Piece
      * @param start the start coordinates of Piece
      * @param end the end coordinates of Piece
      */
-    public Move(Piece pieceType, boolean isWhite, List<Integer> start, List<Integer> end)
+    public Move(Piece piece, boolean isWhite, List<Integer> start, List<Integer> end)
     {
-        this.pieceType = pieceTyepe;
+        this.piece = piece;
         this.isWhite = isWhite;
         this.start = start;
         this.end = end;
     }
 
     /**
-     * Checks if the Piece is a Pawn
-     * @return true if the Piece is Pawn, else false
+     * Getter for piece of the move
+     * @return piece of the move
      */
-    public boolean isPawn(){
-        return pieceType instanceof Pawn;
+    public Piece getPiece(){
+        return piece;
     }
 
     /**

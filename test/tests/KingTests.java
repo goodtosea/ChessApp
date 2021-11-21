@@ -102,7 +102,8 @@ class KingTests
 		Board.setPosition(k, 4, 0);
 		Board.setPosition(r, 0, 0);
 		
-		assertEquals(true, k.isValidMove(0, 0));
+		assert(k.isValidMove(0, 0));
+		// TODO: add portion where the move actually happens
 		assertEquals(r, Board.getPiece(3, 0));
 		assertEquals(k, Board.getPiece(2, 0));
 	}

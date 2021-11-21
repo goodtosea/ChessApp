@@ -67,7 +67,7 @@ public class King extends Piece
      * Checks for checkmate.
      * @return true if king is in checkmate, and false otherwise
      */
-    private boolean isInCheckmate() {
+    public boolean isInCheckmate() {
         Map<Piece, List<List<Integer>>> possibleMoves = everyPieceValidMoves(isWhite);
 
         Mover mover = new Mover();

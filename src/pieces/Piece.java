@@ -49,9 +49,12 @@ public abstract class Piece
         return isWhite;
     }
 
-    public void setPosition(int x, int y) {
+    public void setX(int x) {
         this.x = x;
-        this.y = y;
+    }
+    
+    public void setY(int y) {
+    	this.y = y;
     }
 
     /**

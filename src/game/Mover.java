@@ -1,5 +1,7 @@
 package game;
 
+import java.util.*;
+
 import pieces.*;
 
 /**
@@ -10,7 +12,7 @@ public class Mover
     private static boolean isWhiteTurn;
     private static King whiteKing;
     private static King blackKing;
-    private MoveHistory Mhistory;
+    private static MoveHistory history;
 
     /**
      * Constructs a mover.
@@ -31,14 +33,14 @@ public class Mover
         this.blackKing = blackKing;
     }
 
-    /**
-     * Gets the Mhistory object of the MoveHistory class
-     * @return the move history object
-     */
-    public MoveHistory getMhistory()
-    {
-        return Mhistory;
-    }
+//    /**
+//     * Gets the history object of the MoveHistory class
+//     * @return the move history object
+//     */
+//    public MoveHistory getMhistory()
+//    {
+//        return history;
+//    }
 
     /**
      * Moves a piece if the move follows the rules of chess.
@@ -55,17 +57,17 @@ public class Mover
 
         if(piece instanceof Pawn)
         {
-            if(tryMoveIsEnPassantPossible(piece, x, y))
+            if(isValidEnPassant(piece, x, y))
             {
                 Board.setPosition(piece, x, y);
                 List<Integer> end = new ArrayList<Integer>();
                 end.add(x);
                 end.add(y);
-                int removeX = Mhistory.getHistory().get(history.getHistory().size() - 2).getEnd().get(0);
-                int removeY = Mhistory.getHistory().get(history.getHistory().size() - 2).getEnd().get(1);
+                int removeX = history.getLastMove().getEnd().get(0);
+                int removeY = history.getLastMove().getEnd().get(1);
                 Board.setPosition(null, removeX, removeY);
-                Move lastMove = new Move(piece, start, end, piece.isWhite());
-                Mhistory.storeMove(lastMove);
+                Move lastMove = new Move(piece, piece.isWhite(), start, end);
+                history.add(lastMove);
                 return true;
             }
         }
@@ -91,18 +93,19 @@ public class Mover
             List<Integer> end = new ArrayList<Integer>();
             end.add(x);
             end.add(y);
-            Move lastMove = new Move(piece, start, end, piece.isWhite());
-            Mhistory.storeMove(lastMove);
+            Move lastMove = new Move(piece, piece.isWhite(), start, end);
+            history.add(lastMove);
             return true;
         }
         return false;
     }
 
-    public boolean tryMoveIsEnPassantPossible(Piece piece, int x, int y)
+    
+    private static boolean isValidEnPassant(Piece piece, int x, int y)
     {
-        Move previousMove = Mhistory.getLastMove();
+        Move previousMove = history.getLastMove();
 
-        if(previousMove.isPawn() && !previousMove.isWhite())
+        if(previousMove.getPiece() instanceof Pawn && !previousMove.isWhite())
         {
             if(previousMove.getEnd().get(1) - previousMove.getStart().get(1) == -2) {
                 if (previousMove.getEnd().get(1) == piece.getY()) {
@@ -123,7 +126,7 @@ public class Mover
             }
         }
 
-        if(previousMove.isPawn().isWhite()) {
+        if(previousMove.getPiece() instanceof Pawn && previousMove.isWhite()) {
 //            Move previousMove = mv.getMhistory().getLastMove();
             if (previousMove.getEnd().get(1) - previousMove.getStart().get(1) == 2) {
                 if (previousMove.getEnd().get(1) == piece.getY()) {
