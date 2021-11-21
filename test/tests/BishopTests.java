@@ -20,13 +20,13 @@ class BishopTests
 		Board.setPosition(new Bishop(6, 6, false), 6, 6);
 		
 //		b.isValidMove(2, 2);
-		assertEquals(b.isValidMove(2, 2), false);	// Same position
+		assertEquals(false, b.isValidMove(2, 2));	// Same position
 //		b.isValidMove(3, 3);
-		assertEquals(b.isValidMove(3, 3), true);	// Up-right 1
-		assertEquals(b.isValidMove(4, 4), false);
-		assertEquals(b.isValidMove(2, 3), false);	// Up 1 (invalid)
-		assertEquals(b.isValidMove(5, 5), false);	// Up-right 2
-		assertEquals(b.isValidMove(6, 6), true);
-		assertEquals(b.isValidMove(1, 3), true);	// Up-left 1
+		assertEquals(true, 	b.isValidMove(3, 3));	// Up-right 1
+		assertEquals(false, b.isValidMove(4, 4));
+		assertEquals(false, b.isValidMove(2, 3));	// Up 1 (invalid)
+		assertEquals(false, b.isValidMove(5, 5));	// Up-right 2
+		assertEquals(false, b.isValidMove(6, 6));
+		assertEquals(true, 	b.isValidMove(1, 3));	// Up-left 1
 	}
 }
