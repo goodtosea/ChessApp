@@ -45,9 +45,10 @@ public class Mover
      * @param piece - the piece to attempt to move
      * @param x - the column to attempt to move to
      * @param y - the row to attempt to move to
+     * @param promoteTo - the piece to convert the pawn to
      * @return true if the piece moves successfully, and false otherwise
      */
-    protected boolean tryMovePiece(Piece piece, int x, int y) {
+    public boolean tryMovePiece(Piece piece, int x, int y, Piece promoteTo) {
         List<Integer> start = new ArrayList<Integer>();
         start.add(piece.getX());
         start.add(piece.getY());
@@ -71,8 +72,10 @@ public class Mover
                     int removeY = Mhistory.getHistory().get(history.getHistory().size() - 2).getEnd().get(1);
                     Board.setPosition(null, removeX, removeY);
                 }
-
+                
+                pawnPromotion((Pawn) piece, promoteTo);
             }
+            
             return true;
         }
         return false;
@@ -112,7 +115,27 @@ public class Mover
 
         return !isInCheck;
 
-
     }
-
+    
+    
+    /**
+     * Does pawn promotion on the board, replacing the pawn on the board with what is given in the parameters
+     * @param pawn is the pawn to be promoted
+     * @param replacement is the type of piece to replace pawn
+     * @return true if the promotion is successful, false otherwise (can be used to give the signal to view potentially)
+     */
+    private boolean pawnPromotion(Pawn pawn, Piece replacement)
+    {
+    	Piece[][] board = Board.getBoardArray();
+    	if (pawn.isWhite() && pawn.getY() == board[0].length)
+    	{
+    		Board.setPosition(replacement, pawn.getX(), pawn.getY());
+    	}
+    	else if (!pawn.isWhite() && pawn.getY() == 0)
+    	{
+    		Board.setPosition(replacement, pawn.getX(), pawn.getY());
+    	}
+    	return false;
+    }
+    
 }
