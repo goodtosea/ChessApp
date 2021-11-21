@@ -49,6 +49,11 @@ public abstract class Piece
         return isWhite;
     }
 
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     /**
      * Finds all the ways the piece can move, not accounting for check or player turn.
      * @return an ArrayList arr such that the valid moves are to the cells x=arr.get(2k), y=arr.get(2k+1) for integers k
@@ -62,14 +67,14 @@ public abstract class Piece
             int j = 0;
             while(j < Board.getBoardArray().length)
             {
-                List<Integer> li = new ArrayList<Integer>();
                 if(isValidMove(i,j))
                 {
+                    List<Integer> li = new ArrayList<Integer>();
                     li.add(i);
                     li.add(j);
+                    listRes.add(li);
                 }
                 j++;
-                listRes.add(li);
             }
             i++;
         }

@@ -10,6 +10,7 @@ import game.*;
  */
 public class King extends Piece
 {
+    private boolean hasMoved;
 
     /**
      * Constructs a king and places it at a specified position on the board.
@@ -19,10 +20,12 @@ public class King extends Piece
      */
     public King(int x, int y, boolean isWhite) {
         super(x, y, isWhite);
+        hasMoved = false;
     }
 
     /**
      * Checks if the piece can move in the specified way, not accounting for check or player turn.
+     * Does not account for castling.
      * @param x - the column to move to
      * @param y - the row to move to
      * @return true if the move is valid, and false otherwise
@@ -65,15 +68,6 @@ public class King extends Piece
      * @return true if king is in checkmate, and false otherwise
      */
     private boolean isInCheckmate() {
-        /*
-        (1) is in check?
-        (2) call findAllValidMoves() on every piece belonging to player
-        (3) store all moves somehow
-        (4) instantiate Mover class
-        (5) loop through possible moves and call Mover's isValidMove() on each one
-        (6) if one of the moves is valid, then return false. otherwise true
-         */
-
         Map<Piece, List<List<Integer>>> possibleMoves = everyPieceValidMoves(isWhite);
 
         Mover mover = new Mover();
@@ -115,6 +109,26 @@ public class King extends Piece
         }
 
         return possibleMoves;
+    }
+
+    /**
+     * Used for castling later.
+     * @return true if hasMoved was set to true
+     */
+    public boolean setHasMoved() {
+        if (hasMoved == false) {
+            hasMoved = true;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Accessor for if King has moved
+     * @return true if King has moved, and false otherwise
+     */
+    public boolean hasMoved() {
+        return hasMoved;
     }
 
 }
