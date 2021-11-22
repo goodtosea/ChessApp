@@ -1,5 +1,7 @@
 package view;
 
+import pieces.*;
+
 import java.awt.EventQueue;
 
 import javax.swing.Icon;
@@ -85,6 +87,22 @@ public class BoardWindow
 	public static void setIcon(Icon icon, int x, int y)
 	{
 		
+	}
+
+
+	/**
+	 * For a specified piece, returns its icon
+	 * @param piece
+	 * @return the piece's icon
+	 */
+	public static Icon iconForPiece(Piece piece) {		// maybe temporary method. idk how we want to do this.
+		if (piece instanceof Pawn) 			return null;
+		else if (piece instanceof Rook) 	return null;
+		else if (piece instanceof Bishop) 	return null;
+		else if (piece instanceof Knight) 	return null;
+		else if (piece instanceof Queen) 	return null;
+		else if (piece instanceof King) 	return null;
+		else return null;
 	}
 	
 }
