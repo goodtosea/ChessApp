@@ -1,6 +1,10 @@
 package controller;
 
+import game.Board;
 import pieces.Piece;
+import view.BoardWindow;
+
+import java.util.List;
 
 public class ChessController
 {
@@ -30,9 +34,14 @@ public class ChessController
 	/**
 	 * Highlights the valid moves of a piece on Board and sends the pieces up to the view
 	 */
-	public void tryHighlightValidMoves()
+	public void tryHighlightValidMoves(int x, int y)
 	{
-		
+		BoardWindow.highlightSquare(x, y);
+		selectedPiece = Board.getPiece(x, y);
+		List<List<Integer>> allValidMoves = selectedPiece.findAllValidMoves(true);
+		for (List<Integer> move : allValidMoves) {
+			BoardWindow.highlightSquare(move.get(0), move.get(1));
+		}
 	}
 	
 		
