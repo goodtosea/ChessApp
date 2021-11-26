@@ -31,49 +31,29 @@ public class Mover
         this.isWhiteTurn = isWhiteTurn;
         this.whiteKing = whiteKing;
         this.blackKing = blackKing;
+        history = new MoveHistory();
     }
-
-//    /**
-//     * Gets the history object of the MoveHistory class
-//     * @return the move history object
-//     */
-//    public MoveHistory getMhistory()
-//    {
-//        return history;
-//    }
 
     /**
      * Moves a piece if the move follows the rules of chess.
      * @param piece - the piece to attempt to move
      * @param x - the column to attempt to move to
      * @param y - the row to attempt to move to
-     * @param promoteTo - the piece to convert the pawn to
      * @return true if the piece moves successfully, and false otherwise
      */
     public static boolean tryMovePiece(Piece piece, int x, int y) {
-        List<Integer> start = new ArrayList<Integer>(); // TODO: Should only add the move if the move is going to happen
+        // is it appropriate player's turn?
+        if (piece.isWhite() != isWhiteTurn) {
+            return false;
+        }
+
+        // record initial position to store in history later
+        List<Integer> start = new ArrayList<>();
         start.add(piece.getX());
         start.add(piece.getY());
 
-        if(piece instanceof Pawn)
-        {
-            if(isValidEnPassant(piece, x, y))
-            {
-                Board.setPosition(piece, x, y);
-                List<Integer> end = new ArrayList<Integer>();
-                end.add(x);
-                end.add(y);
-                int removeX = history.getLastMove().getEnd().get(0);
-                int removeY = history.getLastMove().getEnd().get(1);
-                Board.setPosition(null, removeX, removeY);
-                Move lastMove = new Move(piece, piece.isWhite(), start, end);
-                history.add(lastMove);
-                return true;
-            }
-        }
-        
         // if (isValidMove(...)) then move
-        if (isValidMove(piece, x, y)) {
+        if (isValidMove(piece, x, y, true)) {
 
             if (tryMoveIsCastling(piece, x, y)) {
                 int directionMoved = Integer.signum(x-piece.getX());
@@ -83,90 +63,103 @@ public class Mover
                 Board.setPosition(rook, x-directionMoved, y);
                 Board.setPosition(null, rookX, y);
             }
-            // else if (moveIsEnPassant) ...
-            // else if (pawnPromotion) ...
+            else if(tryMoveIsEnPassant(piece, x, y)) {
+                Board.setPosition(piece, x, y);
+                int removeX = history.getLastMove().getEnd().get(0);
+                int removeY = history.getLastMove().getEnd().get(1);
+                Board.setPosition(null, removeX, removeY);
+            }
             else {   // vanilla case
+                Board.setPosition(null, piece.getX(), piece.getY());
                 Board.setPosition(piece, x, y);
             }
           
             isWhiteTurn = !isWhiteTurn;
-            List<Integer> end = new ArrayList<Integer>();
+            trySetHasMoved(piece);
+
+            // add move to history
+            List<Integer> end = new ArrayList<>();
             end.add(x);
             end.add(y);
-            Move lastMove = new Move(piece, piece.isWhite(), start, end);
-            history.add(lastMove);
+            history.add(new Move(piece, piece.isWhite(), start, end));
+
             return true;
         }
         return false;
     }
 
-    
+    /**
+     * Checks if a move is valid en passant.
+     * @param piece - the piece to move
+     * @param x - the destination column
+     * @param y - the destination row
+     * @return true if move is valid en passant, and false otherwise
+     */
     private static boolean isValidEnPassant(Piece piece, int x, int y)
     {
+        if (! (piece instanceof Pawn)) {
+            return false;
+        }
+
+        int stepDirectionY = piece.isWhite() ? 1 : -1;
+
+        // must be diagonal move of step size 1
+        if (! (Math.abs(piece.getX() - x) == 1 && y - piece.getY() == stepDirectionY)) {
+            return false;
+        }
+
+        // must not be first move of game
+        if (history.size() == 0) {
+            return false;
+        }
+
         Move previousMove = history.getLastMove();
+        Piece enemy = Board.getPiece(x, piece.getY());
+        boolean validEnemyPosition = enemy != null && enemy.isWhite() != piece.isWhite();
+        boolean emptyDestination = Board.getPiece(x, y) == null;
+        boolean enemyIsPawn = enemy instanceof Pawn;
+        boolean validPreviousMove = previousMove.getPiece() == enemy &&
+                Math.abs(previousMove.getEnd().get(1) - previousMove.getStart().get(1)) == 2;
 
-        if(previousMove.getPiece() instanceof Pawn && !previousMove.isWhite())
-        {
-            if(previousMove.getEnd().get(1) - previousMove.getStart().get(1) == -2) {
-                if (previousMove.getEnd().get(1) == piece.getY()) {
-                    if (piece.getX() == previousMove.getEnd().get(0) - 1) {
-                        if (x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) + 1) {
+        return validEnemyPosition && emptyDestination && enemyIsPawn && validPreviousMove;
+    }
 
-                            return true;
-                        }
-
-                    }
-                    if (piece.getX() == previousMove.getEnd().get(0) + 1) {
-                        if (x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) + 1) {
-
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        if(previousMove.getPiece() instanceof Pawn && previousMove.isWhite()) {
-//            Move previousMove = mv.getMhistory().getLastMove();
-            if (previousMove.getEnd().get(1) - previousMove.getStart().get(1) == 2) {
-                if (previousMove.getEnd().get(1) == piece.getY()) {
-                    if (piece.getX() == previousMove.getEnd().get(0) - 1) {
-                        if (x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) - 1) {
-
-                            return true;
-                        }
-                    }
-                    if (piece.getX() == previousMove.getEnd().get(0) + 1) {
-                        if (x == previousMove.getEnd().get(0) && y == previousMove.getEnd().get(1) - 1) {
-
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-
+    /**
+     * Assuming that a move is valid, determines if the move is en passant.
+     * Should not be called after changing state of board.
+     * @param piece - the piece to move
+     * @param x - the destination column
+     * @param y - the destination row
+     * @return true if move is en passant, and false otherwise
+     */
+    private static boolean tryMoveIsEnPassant(Piece piece, int x, int y) {
+        // valid diagonal move to empty square implies en passant
+        return piece.getX() != x && Board.getPiece(x, y) == null;
     }
 
 
     /**
-     * Checks if a move follows the rules of chess.
+     * Checks if a move follows the rules of chess. Does not account for player turn.
      * @param piece - the piece to check a move for
      * @param x - the column to simulate a move to
      * @param y - the row to simulate a move to
+     * @param accountForCheck - whether or not the method should ignore check
      * @return true if move follows the rules of chess, and false otherwise
      */
-    public static boolean isValidMove(Piece piece, int x, int y) {
+    public static boolean isValidMove(Piece piece, int x, int y, boolean accountForCheck) {
 
         boolean pieceIsWhite = piece.isWhite();
         King playerKing = pieceIsWhite ? whiteKing : blackKing;
 
-        boolean isValidIncludingSpecialMoves = piece.isValidMove(x, y) || isValidCastling(piece, x, y) ;
-        //      || isValidEnPassant(piece, x, y)
+        boolean isValidIncludingSpecialMoves = piece.isValidMove(x, y) ||
+                isValidCastling(piece, x, y) || isValidEnPassant(piece, x, y);
 
-        if (pieceIsWhite != isWhiteTurn || !isValidIncludingSpecialMoves) {
+        if (!isValidIncludingSpecialMoves) {
             return false;
+        }
+
+        if (!accountForCheck) {
+            return true;
         }
 
         // store initial position and piece at destination
@@ -176,6 +169,7 @@ public class Mover
 
         // carry out the move
         Board.setPosition(piece, x, y);
+        Board.setPosition(null, sourceX, sourceY);
 
         // check if player's king is in check
         boolean isInCheck = playerKing.isInCheck();
@@ -186,7 +180,6 @@ public class Mover
 
         return !isInCheck;
     }
-
   
     /**
      * Checks if a move is valid castling.
@@ -257,6 +250,27 @@ public class Mover
     		Board.setPosition(replacement, pawn.getX(), pawn.getY());
     	}
     	return false;
+    }
+
+    /**
+     * Setter for piece's hasMoved field, if it has one.
+     * @param piece - the piece to set hasMoved to true
+     * @return - true if the piece's hasMoved is set to true
+     */
+    private static boolean trySetHasMoved(Piece piece) {
+        if (piece instanceof Pawn) {
+            ((Pawn) piece).setHasMoved();
+            return true;
+        }
+        else if (piece instanceof Rook) {
+            ((Rook) piece).setHasMoved();
+            return true;
+        }
+        else if (piece instanceof King) {
+            ((King) piece).setHasMoved();
+            return true;
+        }
+        return false;
     }
     
 }
