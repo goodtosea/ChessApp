@@ -1,6 +1,10 @@
 package controller;
 
-import pieces.Piece;
+import game.Board;
+import pieces.*;
+import view.BoardWindow;
+
+import javax.swing.*;
 
 public class ChessController
 {
@@ -12,7 +16,12 @@ public class ChessController
 	 */
 	public void redrawBoard()
 	{
-		
+		Piece[][] boardArrCopy = Board.getBoardArray();
+		for (int x = 0; x < boardArrCopy.length; x++) {
+			for (int y = 0; y < boardArrCopy[0].length; y++) {
+				BoardWindow.setIcon(BoardWindow.iconForPiece(selectedPiece), x, y);
+			}
+		}
 	}
 	
 	
