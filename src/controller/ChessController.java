@@ -27,8 +27,8 @@ public class ChessController
 	
 	/**
 	 * Moves a piece in the model Board to a certain position and updates the view afterwards
-	 * @param x
-	 * @param y
+	 * @param x - column to move selectedPiece to
+	 * @param y - row to move selectedPiece to
 	 */
 	public void tryMovePiece(int x, int y)
 	{
@@ -38,8 +38,10 @@ public class ChessController
 	
 	/**
 	 * Highlights the valid moves of a piece on Board and sends the pieces up to the view
+	 * @param x - column of square clicked
+	 * @param y - row of square clicked
 	 */
-	public void tryHighlightValidMoves()
+	public void tryHighlightValidMoves(int x, int y)
 	{
 		
 	}
@@ -48,10 +50,17 @@ public class ChessController
 	/**
 	 * Logic for what happens when a button is clicked
 	 * Calls controller methods related to movement and simplifies the actionListener code for each button
+	 * @param x - column of square clicked
+	 * @param y - row of square clicked
 	 */
-	public void onSquareClick()
+	public void onSquareClick(int x, int y)
 	{
-		
+		if (selectedPiece == null) {
+			tryHighlightValidMoves(x, y);
+		}
+		else {
+			tryMovePiece(x, y);
+		}
 	}
 	
 }
