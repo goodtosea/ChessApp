@@ -3,12 +3,26 @@ package controller;
 import game.Board;
 import pieces.Piece;
 import view.*;
+
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+
 import game.*;
 
 public class ChessController
 {
 	
-	private Piece selectedPiece; // Holds the piece we're currently operating on for logic in tryMovePiece and highlighting
+	private Piece 					selectedPiece; // Holds the piece we're currently operating on for logic in tryMovePiece and highlighting
+	private BlockingQueue<Message> 	queue;
+	private BoardWindow 			board_window;
+	
+	
+	public ChessController(BlockingQueue<Message> queue, BoardWindow board_window)
+	{
+		this.queue 			= queue;
+		this.board_window 	= board_window;
+	}
+	
 	
 	/**
 	 * Redraws the view "board" given the properties of the model Board
@@ -18,9 +32,10 @@ public class ChessController
 		Piece[][] boardArrCopy = Board.getBoardArray();
 		for (int x = 0; x < boardArrCopy.length; x++) {
 			for (int y = 0; y < boardArrCopy[0].length; y++) {
-				BoardWindow.setIcon(BoardWindow.iconForPiece(selectedPiece), x, y);
+				BoardWindow.setIcon(BoardWindow.iconForPiece(boardArrCopy[x][y]), x, y);
 			}
 		}
+		board_window.paintBoard();
 	}
 	
 	
@@ -45,8 +60,18 @@ public class ChessController
 	 */
 	public void tryHighlightValidMoves(int x, int y)
 	{
-		BoardWindow.highlightSquare(x, y);
 		selectedPiece = Board.getPiece(x, y);
+		
+		if (selectedPiece == null) return;
+		
+		if (Mover.isWhiteTurn() != selectedPiece.isWhite()) 
+		{
+			selectedPiece = null;
+			return;
+		}
+		
+		BoardWindow.highlightSquare(x, y);
+		
 		List<List<Integer>> allValidMoves = selectedPiece.findAllValidMoves(true);
 		for (List<Integer> move : allValidMoves) {
 			BoardWindow.highlightSquare(move.get(0), move.get(1));
@@ -67,6 +92,31 @@ public class ChessController
 		}
 		else {
 			tryMovePiece(x, y);
+		}
+	}
+	
+	
+	public void mainLoop()
+	{
+		this.redrawBoard();
+		
+		while (board_window.isDisplayable())
+		{
+			Message message = null;
+			try
+			{
+				message = queue.take();
+			}
+			catch (InterruptedException e)
+			{
+				
+			}
+			
+			if (message.getClass() == OnSquareClickMessage.class)
+			{
+				OnSquareClickMessage osqm = (OnSquareClickMessage) message;
+				this.onSquareClick(osqm.getX(), osqm.getY());
+			}
 		}
 	}
 	

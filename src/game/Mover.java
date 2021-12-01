@@ -62,12 +62,14 @@ public class Mover
                 Board.setPosition(piece, x, y);
                 Board.setPosition(rook, x-directionMoved, y);
                 Board.setPosition(null, rookX, y);
+                Board.setPosition(null, start.get(0), start.get(1));
             }
             else if(tryMoveIsEnPassant(piece, x, y)) {
                 Board.setPosition(piece, x, y);
                 int removeX = history.getLastMove().getEnd().get(0);
                 int removeY = history.getLastMove().getEnd().get(1);
                 Board.setPosition(null, removeX, removeY);
+                Board.setPosition(null, start.get(0), start.get(1));
             }
             else {   // vanilla case
                 Board.setPosition(null, piece.getX(), piece.getY());
@@ -271,6 +273,12 @@ public class Mover
             return true;
         }
         return false;
+    }
+    
+    
+    public static boolean isWhiteTurn()
+    {
+    	return isWhiteTurn;
     }
     
 }

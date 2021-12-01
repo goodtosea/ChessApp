@@ -57,6 +57,7 @@ public class PawnPromotionWindow extends JFrame {
 		button_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton rook_button = new JButton("");
+		rook_button.setIcon(new ImageIcon("icons/rook.png"));
 		rook_button.setPreferredSize(new Dimension(40, 40));
 		button_panel.add(rook_button);
 		
