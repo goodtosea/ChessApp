@@ -8,17 +8,24 @@ import javax.swing.JButton;
 public class ChessButton extends JButton
 {
 
-	private int x, y;
+	private int grid_x, grid_y;
 	
-	public int getX()
+	public ChessButton(int grid_x, int grid_y)
 	{
-		return x;
+		this.grid_x = grid_x;
+		this.grid_y = grid_y;
 	}
 	
 	
-	public int getY()
+	public int getGridX()
 	{
-		return y;
+		return grid_x;
+	}
+	
+	
+	public int getGridY()
+	{
+		return grid_y;
 	}
 	
 }
