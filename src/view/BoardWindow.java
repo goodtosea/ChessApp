@@ -134,7 +134,7 @@ public class BoardWindow extends JFrame
 	 */
 	public static void highlightSquare(int x, int y)
 	{
-		
+		board[x][y].setBackground(Color.lightGray);
 	}
 	
 	
@@ -155,7 +155,7 @@ public class BoardWindow extends JFrame
 	 */
 	public static void setIcon(Icon icon, int x, int y)
 	{
-		
+		board[x][y] = new JButton(icon);
 	}
 
 

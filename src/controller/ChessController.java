@@ -2,9 +2,8 @@ package controller;
 
 import game.Board;
 import pieces.Piece;
-import view.BoardWindow;
-
-import java.util.List;
+import view.*;
+import game.*;
 
 public class ChessController
 {
@@ -27,12 +26,15 @@ public class ChessController
 	
 	/**
 	 * Moves a piece in the model Board to a certain position and updates the view afterwards
-	 * @param x - column to move selectedPiece to
-	 * @param y - row to move selectedPiece to
+	 * @param x the row the piece is tried to move in
+	 * @param y the column the piece is tried to move in
 	 */
 	public void tryMovePiece(int x, int y)
 	{
-		
+
+		Mover.tryMovePiece(selectedPiece, x, y);
+		selectedPiece = null;
+		redrawBoard();
 	}
 	
 	
