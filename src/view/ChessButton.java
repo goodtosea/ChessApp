@@ -8,24 +8,32 @@ import javax.swing.JButton;
 public class ChessButton extends JButton
 {
 
-	private int x, y;
-
-	/**
-	 * Getter for the row of the button
-	 * @return the row of the button
-	 */
-	public int getX()
+	private int grid_x, grid_y;
+	
+	public ChessButton(int grid_x, int grid_y)
 	{
-		return x;
+		this.grid_x = grid_x;
+		this.grid_y = grid_y;
 	}
+
 
 	/**
 	 * Getter for the column of the button
 	 * @return the column of the button
 	 */
-	public int getY()
+	public int getGridX()
 	{
-		return y;
+		return grid_x;
+	}
+	
+  
+	/**
+	 * Getter for the row of the button
+	 * @return the row of the button
+	 */
+	public int getGridY()
+	{
+		return grid_y;
 	}
 	
 }
