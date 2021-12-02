@@ -50,6 +50,8 @@ public class ChessController
 		Mover.tryMovePiece(selectedPiece, x, y);
 		selectedPiece = null;
 		redrawBoard();
+		System.out.println("white in checkmate: " + Mover.isInCheckmate(true));
+		System.out.println("black in checkmate: " + Mover.isInCheckmate(false));
 	}
 	
 	
@@ -69,12 +71,17 @@ public class ChessController
 			selectedPiece = null;
 			return;
 		}
-		
+
 		BoardWindow.highlightSquare(x, y);
-		
+
 		List<List<Integer>> allValidMoves = selectedPiece.findAllValidMoves(true);
-		for (List<Integer> move : allValidMoves) {
-			BoardWindow.highlightSquare(move.get(0), move.get(1));
+		try {
+			for (List<Integer> move : allValidMoves) {
+				BoardWindow.highlightSquare(move.get(0), move.get(1));
+			}
+		}
+		catch (NullPointerException e) {
+			// do nothing
 		}
 	}
 	

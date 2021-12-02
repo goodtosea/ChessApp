@@ -136,7 +136,7 @@ public class Mover
      */
     private static boolean tryMoveIsEnPassant(Piece piece, int x, int y) {
         // valid diagonal move to empty square implies en passant
-        return piece.getX() != x && Board.getPiece(x, y) == null;
+        return (piece instanceof Pawn) && piece.getX() != x && Board.getPiece(x, y) == null;
     }
 
 
@@ -279,6 +279,11 @@ public class Mover
     public static boolean isWhiteTurn()
     {
     	return isWhiteTurn;
+    }
+
+
+    public static boolean isInCheckmate(boolean forWhiteking) {
+        return forWhiteking ? whiteKing.isInCheckmate() : blackKing.isInCheckmate();
     }
     
 }

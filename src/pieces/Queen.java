@@ -61,7 +61,7 @@ public class Queen extends Piece
     		// Pick the change that's greatest (one will always be 0 in a legal move)
     		int deltaX = x - this.x;
         	int deltaY = y - this.y;
-        	int pathLength = deltaX == 0 ? deltaY : deltaX;
+        	int pathLength = deltaX == 0 ? Math.abs(deltaY) : Math.abs(deltaX);
         	
         	// No movement isn't a valid move
         	if (pathLength == 0)
