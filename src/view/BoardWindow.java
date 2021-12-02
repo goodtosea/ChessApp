@@ -32,8 +32,8 @@ public class BoardWindow extends JFrame
 	
 	private static ChessButton[][] board;
 	private BlockingQueue<Message> queue;
-	private int boardWidth = 8;
-    private int boardHeight = 8;
+	private int boardWidth;
+    private int boardHeight;
 
 	/**
 	 * Launch the application.
@@ -46,7 +46,7 @@ public class BoardWindow extends JFrame
 			{
 				try
 				{
-					BoardWindow window = new BoardWindow(null);
+					BoardWindow window = new BoardWindow(null, 8, 8);
 					window.setVisible(true);
 				} catch (Exception e)
 				{
@@ -60,10 +60,12 @@ public class BoardWindow extends JFrame
 	/**
 	 * Create the application.
 	 */
-	public BoardWindow(BlockingQueue<Message> queue)
+	public BoardWindow(BlockingQueue<Message> queue, int boardWidth, int boardHeight)
 	{
 		this.queue = queue;
-		this.board = new ChessButton[8][8];
+		this.boardWidth = boardWidth;
+		this.boardHeight = boardHeight;
+		this.board = new ChessButton[boardWidth][boardHeight];
 		this.initialize();
 		this.paintBoard();
 		this.setVisible(true);
@@ -100,7 +102,7 @@ public class BoardWindow extends JFrame
 		
 		
 		JPanel board_panel = new JPanel(new GridLayout(boardHeight, boardWidth));
-		board_panel.setMaximumSize(new Dimension(240, 240));
+		board_panel.setMaximumSize(new Dimension(40*boardWidth, 40*boardHeight));
 		board_holding_panel.add(board_panel);
 
         for (int y = boardHeight-1; y >= 0; y--) 

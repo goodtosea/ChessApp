@@ -16,6 +16,16 @@ public class Board
 		boardArray = new Piece[8][8];
     }
 
+
+    /**
+     * Constructs an empty board of specified size
+     * @param width
+     * @param height
+     */
+    public Board(int width, int height) {
+	    boardArray = new Piece[width][height];
+    }
+
 	
     /**
      * Sets the value of a cell in the board to a specified piece and updates the piece's current position.
