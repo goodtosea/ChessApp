@@ -14,7 +14,9 @@ public class ChessController
 	
 	private Piece 					selectedPiece; // Holds the piece we're currently operating on for logic in tryMovePiece and highlighting
 	private BlockingQueue<Message> 	queue;
-	private View 			board_window;
+	private View 					board_window;
+	private boolean 				pawnPromotionOpen;
+	private boolean					justDidPawnPromotion;
 	
 	// Settings Variables
 	private int boardWidth = 8;
@@ -50,12 +52,20 @@ public class ChessController
 	 */
 	public void tryMovePiece(int x, int y)
 	{
-
-		Mover.tryMovePiece(selectedPiece, x, y);
+		if (Mover.tryMovePiece(selectedPiece, x, y))
+			justDidPawnPromotion = false;
+		
 		selectedPiece = null;
 		redrawBoard();
 		System.out.println("white in checkmate: " + Mover.isInCheckmate(true));
 		System.out.println("black in checkmate: " + Mover.isInCheckmate(false));
+		
+		if (Mover.lastMovePawnPromotion() && !justDidPawnPromotion)
+		{
+			board_window.pawnPromotion(y);
+			pawnPromotionOpen = true;
+			justDidPawnPromotion = true;
+		}
 	}
 	
 	
@@ -125,8 +135,11 @@ public class ChessController
 			
 			if (message.getClass() == OnSquareClickMessage.class)
 			{
-				OnSquareClickMessage osqm = (OnSquareClickMessage) message;
-				this.onSquareClick(osqm.getX(), osqm.getY());
+				if (!pawnPromotionOpen)
+				{
+					OnSquareClickMessage osqm = (OnSquareClickMessage) message;
+					this.onSquareClick(osqm.getX(), osqm.getY());
+				}
 			}
 			else if (message.getClass() == PlayGameMessage.class)
 			{
@@ -149,6 +162,16 @@ public class ChessController
 				ApplySettingsMessage apply = (ApplySettingsMessage) message;
 				boardWidth 	= apply.getboardWidth();
 				boardHeight = apply.getboardHeight();
+			}
+			else if (message.getClass() == PawnPromotionMessage.class)
+			{
+				PawnPromotionMessage pawn_promo = (PawnPromotionMessage) message;
+				Move last_move = Mover.getMoveHistory().getLastMove();
+				
+				
+				Board.setPosition(pawn_promo.getPiece(), last_move.getEnd().get(0), last_move.getEnd().get(1));
+				redrawBoard();
+				pawnPromotionOpen = false;
 			}
 		}
 	}

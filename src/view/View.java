@@ -268,9 +268,10 @@ public class View extends JFrame
 	/**
 	 * Opens a panel on top of the board that prompts the user to select a type of piece for the promotion
 	 */
-	public static void pawnPromotion()
+	public void pawnPromotion(int last_move_y)
 	{
-		
+		PawnPromotionWindow frame = new PawnPromotionWindow(queue, last_move_y);
+		frame.setVisible(true);
 	}
 	
 	

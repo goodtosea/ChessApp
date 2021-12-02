@@ -282,8 +282,28 @@ public class Mover
     }
 
 
-    public static boolean isInCheckmate(boolean forWhiteking) {
+    public static boolean isInCheckmate(boolean forWhiteking) 
+    {
         return forWhiteking ? whiteKing.isInCheckmate() : blackKing.isInCheckmate();
+    }
+    
+    
+    public static boolean lastMovePawnPromotion()
+    {
+    	Move move = history.getLastMove();
+    	
+    	if (move != null && move.getPiece() instanceof Pawn)
+    	{
+    		if (move.getEnd().get(1) == Board.getBoardArray()[0].length - 1 || move.getEnd().get(1) == 0)
+    			return true;
+    	}
+    	return false;
+    }
+    
+    
+    public static MoveHistory getMoveHistory()
+    {
+    	return history;
     }
     
 }
