@@ -15,21 +15,22 @@ public class App
 		BlockingQueue<Message> queue = new LinkedBlockingQueue<>();
 
 		// between 8 and 16 for now
-		int boardWidth = 16;
-		int boardHeight = 16;
-		
-		Board board = new Board(boardWidth, boardHeight);
-		Board.fillBoard();
+//		int boardWidth = 16;
+//		int boardHeight = 16;
+//		
+//		Board board = new Board(boardWidth, boardHeight);
+//		Board.fillBoard();
+//
+//		int firstPieceCol = (Board.getBoardArray().length - 8) / 2;
+//		int topRow = Board.getBoardArray()[0].length - 1;
+//		King whiteKing = (King) Board.getPiece(firstPieceCol + 4, 0);
+//		King blackKing = (King) Board.getPiece(firstPieceCol + 4, topRow);
+//		
+//		Mover mover = new Mover(true, whiteKing, blackKing);
 
-		int firstPieceCol = (Board.getBoardArray().length - 8) / 2;
-		int topRow = Board.getBoardArray()[0].length - 1;
-		King whiteKing = (King) Board.getPiece(firstPieceCol + 4, 0);
-		King blackKing = (King) Board.getPiece(firstPieceCol + 4, topRow);
-		
-		Mover mover = new Mover(true, whiteKing, blackKing);
-
-		BoardWindow board_window = new BoardWindow(queue, boardWidth, boardHeight);
-		ChessController controller = new ChessController(queue, board_window);
+//		View view = new View(queue, boardWidth, boardHeight);
+		View view = new View(queue);
+		ChessController controller = new ChessController(queue, view);
 		controller.mainLoop();
 	}
 }

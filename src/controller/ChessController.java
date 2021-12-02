@@ -1,6 +1,6 @@
 package controller;
 
-import game.Board;
+import pieces.King;
 import pieces.Piece;
 import view.*;
 
@@ -14,10 +14,14 @@ public class ChessController
 	
 	private Piece 					selectedPiece; // Holds the piece we're currently operating on for logic in tryMovePiece and highlighting
 	private BlockingQueue<Message> 	queue;
-	private BoardWindow 			board_window;
+	private View 			board_window;
+	
+	// Settings Variables
+	private int boardWidth = 8;
+	private int boardHeight = 8;
 	
 	
-	public ChessController(BlockingQueue<Message> queue, BoardWindow board_window)
+	public ChessController(BlockingQueue<Message> queue, View board_window)
 	{
 		this.queue 			= queue;
 		this.board_window 	= board_window;
@@ -32,7 +36,7 @@ public class ChessController
 		Piece[][] boardArrCopy = Board.getBoardArray();
 		for (int x = 0; x < boardArrCopy.length; x++) {
 			for (int y = 0; y < boardArrCopy[0].length; y++) {
-				BoardWindow.setIcon(BoardWindow.iconForPiece(boardArrCopy[x][y]), x, y);
+				View.setIcon(View.iconForPiece(boardArrCopy[x][y]), x, y);
 			}
 		}
 		board_window.paintBoard();
@@ -72,12 +76,12 @@ public class ChessController
 			return;
 		}
 
-		BoardWindow.highlightSquare(x, y);
+		View.highlightSquare(x, y);
 
 		List<List<Integer>> allValidMoves = selectedPiece.findAllValidMoves(true);
 		try {
 			for (List<Integer> move : allValidMoves) {
-				BoardWindow.highlightSquare(move.get(0), move.get(1));
+				View.highlightSquare(move.get(0), move.get(1));
 			}
 		}
 		catch (NullPointerException e) {
@@ -105,7 +109,7 @@ public class ChessController
 	
 	public void mainLoop()
 	{
-		this.redrawBoard();
+//		
 		
 		while (board_window.isDisplayable())
 		{
@@ -123,6 +127,28 @@ public class ChessController
 			{
 				OnSquareClickMessage osqm = (OnSquareClickMessage) message;
 				this.onSquareClick(osqm.getX(), osqm.getY());
+			}
+			else if (message.getClass() == PlayGameMessage.class)
+			{
+				Board board = new Board(boardWidth, boardHeight);
+				Board.fillBoard();
+
+				int firstPieceCol = (Board.getBoardArray().length - 8) / 2;
+				int topRow = Board.getBoardArray()[0].length - 1;
+				King whiteKing = (King) Board.getPiece(firstPieceCol + 4, 0);
+				King blackKing = (King) Board.getPiece(firstPieceCol + 4, topRow);
+				
+				Mover mover = new Mover(true, whiteKing, blackKing);
+				
+				board_window.panelDraw(boardWidth, boardHeight);
+				board_window.paintBoard();
+				this.redrawBoard();
+			}
+			else if (message.getClass() == ApplySettingsMessage.class)
+			{
+				ApplySettingsMessage apply = (ApplySettingsMessage) message;
+				boardWidth 	= apply.getboardWidth();
+				boardHeight = apply.getboardHeight();
 			}
 		}
 	}
