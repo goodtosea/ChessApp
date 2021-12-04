@@ -337,7 +337,7 @@ public class View extends JFrame
 		
 		this.board = new ChessButton[boardWidth][boardHeight];
 		board_panel = new JPanel(new GridLayout(boardHeight, boardWidth));
-		board_panel.setMaximumSize(new Dimension(40*boardWidth, 40*boardHeight));
+		board_panel.setMaximumSize(new Dimension(60*boardWidth, 60*boardHeight));
 
         for (int y = boardHeight-1; y >= 0; y--) 
         {
