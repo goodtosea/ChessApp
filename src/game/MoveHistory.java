@@ -14,7 +14,7 @@ public class MoveHistory extends ArrayList<Move>{
      * @return the last move encountered during the game
      */
     public Move getLastMove(){
-        return get(size() - 1);
+        return size() > 0 ? get(size() - 1) : null;
     }
 
 }

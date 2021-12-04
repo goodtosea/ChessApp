@@ -56,18 +56,21 @@ public class Mover
         if (isValidMove(piece, x, y, true)) {
 
             if (tryMoveIsCastling(piece, x, y)) {
+                int firstPieceCol = (Board.getBoardArray().length - 8) / 2;
                 int directionMoved = Integer.signum(x-piece.getX());
-                int rookX = (directionMoved == 1 ? Board.getBoardArray().length - 1 : 0);
+                int rookX = (directionMoved == 1 ? firstPieceCol + 7 : firstPieceCol);
                 Piece rook = Board.getPiece(rookX, y);
                 Board.setPosition(piece, x, y);
                 Board.setPosition(rook, x-directionMoved, y);
                 Board.setPosition(null, rookX, y);
+                Board.setPosition(null, start.get(0), start.get(1));
             }
             else if(tryMoveIsEnPassant(piece, x, y)) {
                 Board.setPosition(piece, x, y);
                 int removeX = history.getLastMove().getEnd().get(0);
                 int removeY = history.getLastMove().getEnd().get(1);
                 Board.setPosition(null, removeX, removeY);
+                Board.setPosition(null, start.get(0), start.get(1));
             }
             else {   // vanilla case
                 Board.setPosition(null, piece.getX(), piece.getY());
@@ -134,7 +137,7 @@ public class Mover
      */
     private static boolean tryMoveIsEnPassant(Piece piece, int x, int y) {
         // valid diagonal move to empty square implies en passant
-        return piece.getX() != x && Board.getPiece(x, y) == null;
+        return (piece instanceof Pawn) && piece.getX() != x && Board.getPiece(x, y) == null;
     }
 
 
@@ -271,6 +274,37 @@ public class Mover
             return true;
         }
         return false;
+    }
+    
+    
+    public static boolean isWhiteTurn()
+    {
+    	return isWhiteTurn;
+    }
+
+
+    public static boolean isInCheckmate(boolean forWhiteking) 
+    {
+        return forWhiteking ? whiteKing.isInCheckmate() : blackKing.isInCheckmate();
+    }
+    
+    
+    public static boolean lastMovePawnPromotion()
+    {
+    	Move move = history.getLastMove();
+    	
+    	if (move != null && move.getPiece() instanceof Pawn)
+    	{
+    		if (move.getEnd().get(1) == Board.getBoardArray()[0].length - 1 || move.getEnd().get(1) == 0)
+    			return true;
+    	}
+    	return false;
+    }
+    
+    
+    public static MoveHistory getMoveHistory()
+    {
+    	return history;
     }
     
 }

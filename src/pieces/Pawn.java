@@ -56,13 +56,15 @@ public class Pawn extends Piece
 
         // step of 2 valid only if pawn hasn't moved and no obstacles
         if (y - this.y == stepDirectionY*2 && x == this.x) {
-            boolean noObstacles = Board.getPiece(this.x, this.y + stepDirectionY) == null;
+            boolean noObstacles = Board.getPiece(this.x, this.y + stepDirectionY) == null
+                    && Board.getPiece(this.x, this.y + 2*stepDirectionY) == null;
             return !hasMoved && noObstacles && noAllyAtDestination;
         }
 
         // step of 1
         if (y - this.y == stepDirectionY && x == this.x) {
-            return noAllyAtDestination;
+            boolean noObstacles = Board.getPiece(this.x, this.y + stepDirectionY) == null;
+            return noAllyAtDestination && noObstacles;
         }
 
         return false;
