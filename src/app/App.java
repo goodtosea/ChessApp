@@ -7,7 +7,9 @@ import controller.*;
 import game.*;
 import pieces.*;
 import view.*;
-
+/**
+ * The main application window for the chess game.
+ */
 public class App
 {
 	public static void main(String[] args)

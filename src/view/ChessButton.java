@@ -9,7 +9,12 @@ public class ChessButton extends JButton
 {
 
 	private int grid_x, grid_y;
-	
+
+	/**
+	 * Constructs the ChessButton
+	 * @param grid_x the x coordinate of the button
+	 * @param grid_y the y coordinate of the button
+	 */
 	public ChessButton(int grid_x, int grid_y)
 	{
 		this.grid_x = grid_x;

@@ -21,8 +21,12 @@ public class ChessController
 	// Settings Variables
 	private int boardWidth = 8;
 	private int boardHeight = 8;
-	
-	
+
+	/**
+	 * Constructs the ChessController.
+	 * @param queue the blocking queue of messages
+	 * @param board_window the view of the game
+	 */
 	public ChessController(BlockingQueue<Message> queue, View board_window)
 	{
 		this.queue 			= queue;
