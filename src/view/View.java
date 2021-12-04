@@ -71,6 +71,7 @@ public class View extends JFrame
 		
 		this.setContentPane(card_panel);
 		
+		
 		// Menu Panel Stuff
 		JPanel menu_panel = new JPanel();
 		
@@ -116,7 +117,6 @@ public class View extends JFrame
         		CardLayout cl = (CardLayout) card_panel.getLayout();
         		cl.next(card_panel);
         		cl.next(card_panel);
-//        		queue.put(new PlayGameMessage());
         	}
         	catch (Exception exception)
         	{
@@ -124,6 +124,17 @@ public class View extends JFrame
         	}
         });
 		
+		credits_button.addActionListener(e ->  {
+        	try 
+        	{
+        		CardLayout cl = (CardLayout) card_panel.getLayout();
+        		cl.last(card_panel);
+        	}
+        	catch (Exception exception)
+        	{
+        		exception.printStackTrace();
+        	}
+        });
 		
 		buttons.add(play_game_button, gbc);
 		buttons.add(settings_button, gbc);
@@ -193,6 +204,7 @@ public class View extends JFrame
 //            }
 //        }
         
+		// Settings panel
 		JPanel settings_panel = new JPanel();
 				
 		GridBagLayout gbl_contentPane1 = new GridBagLayout();
@@ -248,9 +260,48 @@ public class View extends JFrame
 		gbc1.weighty = 1;
 		settings_panel.add(buttons1, gbc1);
 		
+		
+		// Credits panel
+		JPanel credits_panel = new JPanel();
+		
+		credits_panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		credits_panel.setLayout(gbl_contentPane1);
+		
+		GridBagConstraints gbc11 = new GridBagConstraints();
+
+		gbc11.anchor = GridBagConstraints.NORTH;
+		gbc11.gridwidth = GridBagConstraints.REMAINDER;
+		
+		credits_panel.add(new JLabel("Credits"), gbc11);
+		
+		gbc11.anchor = GridBagConstraints.CENTER;
+		gbc11.fill = GridBagConstraints.HORIZONTAL;
+		
+		JPanel label_panel = new JPanel(new GridBagLayout());
+		
+		label_panel.add(new JLabel("Created by:"), gbc11);
+		label_panel.add(new JLabel("Mohibkhan Pathan"), gbc11);
+		label_panel.add(new JLabel("Nathan Nguyen"), gbc11);
+		label_panel.add(new JLabel("& Alexander Lane"), gbc11);
+		label_panel.add(new JLabel("for Maria Surmenok's CS 151 class"), gbc11);
+		
+		JButton menu_button = new JButton("Main Menu");
+		
+		menu_button.addActionListener(e -> 
+		{
+			CardLayout cl = (CardLayout) card_panel.getLayout();
+    		cl.first(card_panel);
+		});
+		
+		label_panel.add(menu_button, gbc11);
+		gbc11.weighty = 1;
+		credits_panel.add(label_panel, gbc11);
+		
+		
         card_panel.add(menu_panel);
         card_panel.add(game_panel);
         card_panel.add(settings_panel);
+        card_panel.add(credits_panel);
 	}
 
 	
@@ -370,6 +421,28 @@ public class View extends JFrame
         }
         
         board_holding_panel.add(board_panel);
+	}
+	
+	
+	public void checkmateWindow(boolean isWhite)
+	{
+		JFrame checkmate_frame = new JFrame();
+		checkmate_frame.setResizable(false);
+		checkmate_frame.setBounds(this.getWidth() / 2 - 75, this.getHeight() / 2 - 40, 150, 80);
+		JPanel checkmate_panel = new JPanel();
+		checkmate_panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		checkmate_panel.setLayout(new BorderLayout(0, 0));
+		checkmate_frame.setContentPane(checkmate_panel);
+		
+		JLabel win_message_label = new JLabel();
+		
+		if (isWhite)
+			win_message_label.setText("Black wins!");
+		else
+			win_message_label.setText("White wins!");
+		
+		checkmate_panel.add(win_message_label, BorderLayout.NORTH);
+		checkmate_frame.setVisible(true);
 	}
 	
 }

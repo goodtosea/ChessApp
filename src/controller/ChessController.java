@@ -15,7 +15,7 @@ public class ChessController
 	private Piece 					selectedPiece; // Holds the piece we're currently operating on for logic in tryMovePiece and highlighting
 	private BlockingQueue<Message> 	queue;
 	private View 					board_window;
-	private boolean 				pawnPromotionOpen;
+	private boolean 				otherWindowOpen;
 	private boolean					justDidPawnPromotion;
 	
 	// Settings Variables
@@ -57,13 +57,21 @@ public class ChessController
 		
 		selectedPiece = null;
 		redrawBoard();
-		System.out.println("white in checkmate: " + Mover.isInCheckmate(true));
-		System.out.println("black in checkmate: " + Mover.isInCheckmate(false));
+		if (Mover.isInCheckmate(true) && !otherWindowOpen)
+		{
+			board_window.checkmateWindow(true);
+			otherWindowOpen = true;
+		}
+		else if (Mover.isInCheckmate(false) && !otherWindowOpen)
+		{
+			board_window.checkmateWindow(false);
+			otherWindowOpen = true;
+		}
 		
 		if (Mover.lastMovePawnPromotion() && !justDidPawnPromotion)
 		{
 			board_window.pawnPromotion(y);
-			pawnPromotionOpen = true;
+			otherWindowOpen = true;
 			justDidPawnPromotion = true;
 		}
 	}
@@ -119,8 +127,6 @@ public class ChessController
 	
 	public void mainLoop()
 	{
-//		
-		
 		while (board_window.isDisplayable())
 		{
 			Message message = null;
@@ -135,7 +141,7 @@ public class ChessController
 			
 			if (message.getClass() == OnSquareClickMessage.class)
 			{
-				if (!pawnPromotionOpen)
+				if (!otherWindowOpen)
 				{
 					OnSquareClickMessage osqm = (OnSquareClickMessage) message;
 					this.onSquareClick(osqm.getX(), osqm.getY());
@@ -143,6 +149,7 @@ public class ChessController
 			}
 			else if (message.getClass() == PlayGameMessage.class)
 			{
+				otherWindowOpen = false;
 				Board board = new Board(boardWidth, boardHeight);
 				Board.fillBoard();
 
@@ -171,7 +178,7 @@ public class ChessController
 				
 				Board.setPosition(pawn_promo.getPiece(), last_move.getEnd().get(0), last_move.getEnd().get(1));
 				redrawBoard();
-				pawnPromotionOpen = false;
+				otherWindowOpen = false;
 			}
 		}
 	}

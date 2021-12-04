@@ -52,8 +52,8 @@ public class PawnPromotionWindow extends JFrame {
 		this.last_move_y = last_move_y;
 		
 		setTitle("Pawn Promotion");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(195, 100, 260, 140);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setBounds(195, 100, 320, 160);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -71,7 +71,7 @@ public class PawnPromotionWindow extends JFrame {
 		
 		JButton rook_button = new JButton("");
 		rook_button.setIcon(new ImageIcon("icons/black_rook.png"));
-		rook_button.setPreferredSize(new Dimension(40, 40));
+		rook_button.setPreferredSize(new Dimension(60, 60));
 		rook_button.addActionListener(e -> 
 		{
 			try
@@ -95,7 +95,7 @@ public class PawnPromotionWindow extends JFrame {
 		
 		JButton knight_button = new JButton("");
 		knight_button.setIcon(new ImageIcon("icons/black_knight.png"));
-		knight_button.setPreferredSize(new Dimension(40, 40));
+		knight_button.setPreferredSize(new Dimension(60, 60));
 		knight_button.addActionListener(e -> 
 		{
 			try
@@ -119,7 +119,7 @@ public class PawnPromotionWindow extends JFrame {
 		
 		JButton bishop_button = new JButton("");
 		bishop_button.setIcon(new ImageIcon("icons/black_bishop.png"));
-		bishop_button.setPreferredSize(new Dimension(40, 40));
+		bishop_button.setPreferredSize(new Dimension(60, 60));
 		bishop_button.addActionListener(e -> 
 		{
 			try
@@ -143,7 +143,7 @@ public class PawnPromotionWindow extends JFrame {
 		
 		JButton queen_button = new JButton("");
 		queen_button.setIcon(new ImageIcon("icons/black_queen.png"));
-		queen_button.setPreferredSize(new Dimension(40, 40));
+		queen_button.setPreferredSize(new Dimension(60, 60));
 		queen_button.addActionListener(e -> 
 		{
 			try
