@@ -275,20 +275,30 @@ public class Mover
         }
         return false;
     }
-    
-    
+
+    /**
+     * Checks whose turn it is out of the two colored pieces.
+     * @return true if it is White's turn, false if it is Black's turn
+     */
     public static boolean isWhiteTurn()
     {
     	return isWhiteTurn;
     }
 
-
+    /**
+     * Checks if any of the king is in Check.
+     * @param forWhiteking represents the color of the piece to be checked
+     * @return true if the desired colored piece is in check
+     */
     public static boolean isInCheckmate(boolean forWhiteking) 
     {
         return forWhiteking ? whiteKing.isInCheckmate() : blackKing.isInCheckmate();
     }
-    
-    
+
+    /**
+     * Checks if the last move was pawn promotion.
+     * @return true if the move was pawn promotion else false
+     */
     public static boolean lastMovePawnPromotion()
     {
     	Move move = history.getLastMove();
@@ -300,8 +310,11 @@ public class Mover
     	}
     	return false;
     }
-    
-    
+
+    /**
+     * Getter for Move History object created in Mover.
+     * @return history the Move history of the particular Mover
+     */
     public static MoveHistory getMoveHistory()
     {
     	return history;

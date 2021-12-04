@@ -19,8 +19,8 @@ public class Board
 
     /**
      * Constructs an empty board of specified size
-     * @param width
-     * @param height
+     * @param width the width of the board
+     * @param height the height of the board
      */
     public Board(int width, int height) {
 	    boardArray = new Piece[width][height];
