@@ -13,8 +13,8 @@ public class Pawn extends Piece
 
     /**
      * Constructs a pawn and places it at a specified position on the board.
-     * @param x - the column to place the pawn
-     * @param y - the row to place the pawn
+     * @param x the column to place the pawn
+     * @param y the row to place the pawn
      */
     public Pawn(int x, int y, boolean isWhite) {
         super(x,y,isWhite);
@@ -40,8 +40,8 @@ public class Pawn extends Piece
     /**
      * Checks if the piece can move in the specified way, not accounting for check or player turn.
      * Does not account for en passant.
-     * @param x - the column to move to
-     * @param y - the row to move to
+     * @param x the column to move to
+     * @param y the row to move to
      * @return true if the move is valid, and false otherwise
      */
     @Override

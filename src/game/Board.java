@@ -29,9 +29,9 @@ public class Board
 	
     /**
      * Sets the value of a cell in the board to a specified piece and updates the piece's current position.
-     * @param piece - the piece to set the cell's value to
-     * @param x - the column of the cell
-     * @param y - the row of the cell
+     * @param piece the piece to set the cell's value to
+     * @param x the column of the cell
+     * @param y the row of the cell
      */
     public static void setPosition(Piece piece, int x, int y)
     {
@@ -112,8 +112,8 @@ public class Board
   
     /**
      * Getter method for piece at specified location
-     * @param x - the column of the board
-     * @param y - the row of the board
+     * @param x the column of the board
+     * @param y the row of the board
      * @return the piece on the xth column and yth row of the board
      */
     public static Piece getPiece(int x, int y) {

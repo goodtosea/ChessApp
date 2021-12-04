@@ -10,17 +10,17 @@ public class Knight extends Piece
 {
     /**
      * Constructs a knight and places it at a specified position on the board.
-     * @param x - the column to place the knight
-     * @param y - the row to place the knight
-     * @param isWhite - the color of the Knight
+     * @param x the column to place the knight
+     * @param y the row to place the knight
+     * @param isWhite the color of the Knight
      */
     public Knight (int x, int y, boolean isWhite) {
         super(x,y,isWhite);
     }
     /**
      * Checks if the piece can move in the specified way, not accounting for check or player turn.
-     * @param x - the column to move to
-     * @param y - the row to move to
+     * @param x the column to move to
+     * @param y the row to move to
      * @return true if the move is valid, and false otherwise
      */
     @Override

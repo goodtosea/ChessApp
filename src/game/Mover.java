@@ -23,9 +23,9 @@ public class Mover
 
     /**
      * Constructs a mover.
-     * @param isWhiteTurn - the current turn
-     * @param whiteKing - the white king
-     * @param blackKing - the black king
+     * @param isWhiteTurn the current turn
+     * @param whiteKing the white king
+     * @param blackKing the black king
      */
     public Mover(boolean isWhiteTurn, King whiteKing, King blackKing) {
         this.isWhiteTurn = isWhiteTurn;
@@ -36,9 +36,9 @@ public class Mover
 
     /**
      * Moves a piece if the move follows the rules of chess.
-     * @param piece - the piece to attempt to move
-     * @param x - the column to attempt to move to
-     * @param y - the row to attempt to move to
+     * @param piece the piece to attempt to move
+     * @param x the column to attempt to move to
+     * @param y the row to attempt to move to
      * @return true if the piece moves successfully, and false otherwise
      */
     public static boolean tryMovePiece(Piece piece, int x, int y) {
@@ -93,9 +93,9 @@ public class Mover
 
     /**
      * Checks if a move is valid en passant.
-     * @param piece - the piece to move
-     * @param x - the destination column
-     * @param y - the destination row
+     * @param piece the piece to move
+     * @param x the destination column
+     * @param y the destination row
      * @return true if move is valid en passant, and false otherwise
      */
     private static boolean isValidEnPassant(Piece piece, int x, int y)
@@ -130,9 +130,9 @@ public class Mover
     /**
      * Assuming that a move is valid, determines if the move is en passant.
      * Should not be called after changing state of board.
-     * @param piece - the piece to move
-     * @param x - the destination column
-     * @param y - the destination row
+     * @param piece the piece to move
+     * @param x the destination column
+     * @param y the destination row
      * @return true if move is en passant, and false otherwise
      */
     private static boolean tryMoveIsEnPassant(Piece piece, int x, int y) {
@@ -143,10 +143,10 @@ public class Mover
 
     /**
      * Checks if a move follows the rules of chess. Does not account for player turn.
-     * @param piece - the piece to check a move for
-     * @param x - the column to simulate a move to
-     * @param y - the row to simulate a move to
-     * @param accountForCheck - whether or not the method should ignore check
+     * @param piece the piece to check a move for
+     * @param x the column to simulate a move to
+     * @param y the row to simulate a move to
+     * @param accountForCheck whether or not the method should ignore check
      * @return true if move follows the rules of chess, and false otherwise
      */
     public static boolean isValidMove(Piece piece, int x, int y, boolean accountForCheck) {
@@ -186,9 +186,9 @@ public class Mover
   
     /**
      * Checks if a move is valid castling.
-     * @param piece - the piece to move
-     * @param x - the destination column
-     * @param y - the destination row
+     * @param piece the piece to move
+     * @param x the destination column
+     * @param y the destination row
      * @return true if move is valid castling, and false otherwise
      */
     private static boolean isValidCastling(Piece piece, int x, int y) {
@@ -224,9 +224,9 @@ public class Mover
     /**
      * Assuming that a move is valid, determines if the move is castling.
      * Should not be called after changing state of board.
-     * @param piece - the piece to move
-     * @param x - the destination column
-     * @param y - the destination row
+     * @param piece the piece to move
+     * @param x the destination column
+     * @param y the destination row
      * @return true if move is castling, and false otherwise
      */
     private static boolean tryMoveIsCastling(Piece piece, int x, int y) {
@@ -257,8 +257,8 @@ public class Mover
 
     /**
      * Setter for piece's hasMoved field, if it has one.
-     * @param piece - the piece to set hasMoved to true
-     * @return - true if the piece's hasMoved is set to true
+     * @param piece the piece to set hasMoved to true
+     * @return true if the piece's hasMoved is set to true
      */
     private static boolean trySetHasMoved(Piece piece) {
         if (piece instanceof Pawn) {
