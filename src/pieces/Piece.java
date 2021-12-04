@@ -23,8 +23,8 @@ public abstract class Piece
 
     /**
      * Constructs a piece and places it at a specified position on the board.
-     * @param x - the column to place the piece
-     * @param y - the row to place the piece
+     * @param x the column to place the piece
+     * @param y the row to place the piece
      */
     public Piece(int x, int y, boolean isWhite) {
         this.x = x;
@@ -34,8 +34,8 @@ public abstract class Piece
 
     /**
      * Checks if the piece can move in the specified way, not accounting for check or player turn.
-     * @param x - the column to move to
-     * @param y - the row to move to
+     * @param x the column to move to
+     * @param y the row to move to
      * @return true if the move is valid, and false otherwise
      */
     public abstract boolean isValidMove(int x, int y);

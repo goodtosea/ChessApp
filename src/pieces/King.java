@@ -14,8 +14,8 @@ public class King extends Piece
 
     /**
      * Constructs a king and places it at a specified position on the board.
-     * @param x - the column to place the king
-     * @param y - the row to place the king
+     * @param x the column to place the king
+     * @param y the row to place the king
      * @param isWhite - whether the piece is white
      */
     public King(int x, int y, boolean isWhite) {
@@ -26,8 +26,8 @@ public class King extends Piece
     /**
      * Checks if the piece can move in the specified way, not accounting for check or player turn.
      * Does not account for castling.
-     * @param x - the column to move to
-     * @param y - the row to move to
+     * @param x the column to move to
+     * @param y the row to move to
      * @return true if the move is valid, and false otherwise
      */
     @Override
