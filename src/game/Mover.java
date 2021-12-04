@@ -56,8 +56,9 @@ public class Mover
         if (isValidMove(piece, x, y, true)) {
 
             if (tryMoveIsCastling(piece, x, y)) {
+                int firstPieceCol = (Board.getBoardArray().length - 8) / 2;
                 int directionMoved = Integer.signum(x-piece.getX());
-                int rookX = (directionMoved == 1 ? Board.getBoardArray().length - 1 : 0);
+                int rookX = (directionMoved == 1 ? firstPieceCol + 7 : firstPieceCol);
                 Piece rook = Board.getPiece(rookX, y);
                 Board.setPosition(piece, x, y);
                 Board.setPosition(rook, x-directionMoved, y);
